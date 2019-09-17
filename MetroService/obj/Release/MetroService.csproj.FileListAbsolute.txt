@@ -79,3 +79,4 @@ C:\Users\Адиль\Desktop\Обучение в МИРЭА\3 курс\5 семе
 C:\Users\Адиль\Desktop\Обучение в МИРЭА\3 курс\5 семестр\СиП\MetroService\obj\Release\MetroService.csproj.CopyComplete
 C:\Users\Адиль\Desktop\Обучение в МИРЭА\3 курс\5 семестр\СиП\MetroService\obj\Release\MetroService.dll
 C:\Users\Адиль\Desktop\Обучение в МИРЭА\3 курс\5 семестр\СиП\MetroService\obj\Release\MetroService.pdb
+C:\Users\Адиль\Desktop\Обучение в МИРЭА\3 курс\5 семестр\СиП\MetroService\obj\Release\MetroService.csprojAssemblyReference.cache
