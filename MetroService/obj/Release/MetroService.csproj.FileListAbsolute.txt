@@ -80,3 +80,8 @@ C:\Users\Адиль\Desktop\Обучение в МИРЭА\3 курс\5 семе
 C:\Users\Адиль\Desktop\Обучение в МИРЭА\3 курс\5 семестр\СиП\MetroService\obj\Release\MetroService.dll
 C:\Users\Адиль\Desktop\Обучение в МИРЭА\3 курс\5 семестр\СиП\MetroService\obj\Release\MetroService.pdb
 C:\Users\Адиль\Desktop\Обучение в МИРЭА\3 курс\5 семестр\СиП\MetroService\obj\Release\MetroService.csprojAssemblyReference.cache
+C:\Users\Адиль\Desktop\Обучение в МИРЭА\3 курс\5 семестр\СиП\MetroService\bin\EntityFramework.dll
+C:\Users\Адиль\Desktop\Обучение в МИРЭА\3 курс\5 семестр\СиП\MetroService\bin\EntityFramework.SqlServer.dll
+C:\Users\Адиль\Desktop\Обучение в МИРЭА\3 курс\5 семестр\СиП\MetroService\bin\EntityFramework.xml
+C:\Users\Адиль\Desktop\Обучение в МИРЭА\3 курс\5 семестр\СиП\MetroService\bin\EntityFramework.SqlServer.xml
+C:\Users\Адиль\Desktop\Обучение в МИРЭА\3 курс\5 семестр\СиП\MetroService\bin\ru\EntityFramework.resources.dll
