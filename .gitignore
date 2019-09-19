@@ -1,3 +1,5 @@
 /MetroService/bin
 /MetroService/obj/Debug
 /MetroService/.vs
+/MetroService/obj
+/MetroService/MetroService.sln
