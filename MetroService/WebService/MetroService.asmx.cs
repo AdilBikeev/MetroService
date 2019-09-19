@@ -43,7 +43,7 @@ namespace MetroService.WebService
         /// <param name="login">Логин пользователя.</param>
         /// <param name="password">Пароль пользователя.</param>
         /// <returns>JSON объект с кодом ошибки и сопровождающим сообщением.</returns>
-        [WebMethod]
+        [WebMethod(Description = "Проверяет соединение с сервером.")]
         public string Ping(string login, string password)
         {
 
@@ -78,7 +78,7 @@ namespace MetroService.WebService
         /// </summary>
         /// <param name="sekre_key">Секретный ключ для доступа к списку пользователей.</param>
         /// <returns>JSON объект со списком пользователей</returns>
-        [WebMethod]
+        [WebMethod(Description = "Предоставляет список пользователей сервиса.")]
         public string GetUsers(string sekret_key)
         {
             JObject response = this.getObjResponse();
