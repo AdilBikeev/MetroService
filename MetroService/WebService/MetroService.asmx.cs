@@ -37,6 +37,26 @@ namespace MetroService.WebService
             return response;
         }
 
+
+        private bool isUserExist(string login, string password)
+        {
+            MetroDbEntities.User.Load();
+            var lstUsers = MetroDbEntities.User.Local;
+            
+            if(lstUsers.Count > 0)
+            {
+                foreach(var user in lstUsers)
+                {
+                    if(user.login == login && user.password == password)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Проверяет соединение с сервером.
         /// </summary>
@@ -122,6 +142,62 @@ namespace MetroService.WebService
                 response["message"] = "Отказано в доступе";
             }
 
+            return response.ToString();
+        }
+
+        [WebMethod(Description = "Предоставляет список документов для пользователя с указанным логином и паролем.")]
+        public string GetDocuments(string login, string password)
+        {
+            JObject response = this.getObjResponse();
+
+            try
+            {
+                if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+                {
+                    response["error"] = "1";
+                    response["message"] = "Вы не указали логин/пароль";
+                }
+                else
+                {
+                    
+                    MetroDbEntities = new MetroDbEntities();
+                    
+                    MetroDbEntities.Document.Load();
+                    if(isUserExist(login, password))
+                    { 
+                        var lstDocuments = MetroDbEntities.Document.Local;
+                        if(lstDocuments.Count > 0)
+                        {
+                            var documents = new JArray();
+                        
+                            foreach (var doc in lstDocuments)
+                            {
+                                var document = new JObject();
+                                document.Add("header", doc.header);
+                                document.Add("Name", doc.Name);
+                                document.Add("content", doc.content);
+
+                                documents.Add(document);
+                            }
+
+                            response.Add("documents", documents);
+                        } else
+                        {
+                            response["error"] = "505";
+                            response["message"] = "На сервисе не нашелся ни один документ";
+                        }
+                    }else
+                    {
+                        response["error"] = "5";
+                        response["message"] = "Указан неверный логин/пароль";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response["error"] = "30";
+                response["message"] = ex.Message;
+            }
             return response.ToString();
         }
     }

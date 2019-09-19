@@ -132,6 +132,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Document.cs">
+      <DependentUpon>MetroDbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MetroDbModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -166,8 +169,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\MetroDbModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MetroDbModel.Context.cs</LastGenOutput>
       <DependentUpon>MetroDbModel.edmx</DependentUpon>
+      <LastGenOutput>MetroDbModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\MetroDbModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -177,13 +180,6 @@
     <Content Include="Scripts\ModelDb\CreateMetroDb.sql" />
     <Content Include="Scripts\ModelDb\InsertData.sql" />
     <Content Include="WebService\MetroService.asmx" />
-    <EntityDeploy Include="Models\MetroDbModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MetroDbModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\MetroDbModel.edmx.diagram">
-      <DependentUpon>MetroDbModel.edmx</DependentUpon>
-    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -201,6 +197,13 @@
     <Folder Include="fonts\" />
   </ItemGroup>
   <ItemGroup>
+    <EntityDeploy Include="Models\MetroDbModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MetroDbModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\MetroDbModel.edmx.diagram">
+      <DependentUpon>MetroDbModel.edmx</DependentUpon>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
