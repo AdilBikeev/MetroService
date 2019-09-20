@@ -17,6 +17,7 @@ using ClientMetro.Models;
 using Newtonsoft.Json.Linq;
 using ClientMetro.HelperMethods;
 using System.Net;
+using ClientMetro.Controller;
 
 namespace ClientMetro
 {
@@ -25,46 +26,25 @@ namespace ClientMetro
     /// </summary>
     public partial class MainWindow : Window
     {
-        /// <summary>
-        /// Объект для обращения к веб-сервису Метро
-        /// </summary>
-        private MetroServiceSoapClient client;
+        private MainWindowController mainCotr;
 
-        /// <summary>
-        /// Список пользователей
-        /// </summary>
-        private List<User> users = null;
         public MainWindow()
         {
             InitializeComponent();
-            ServicePointManager.Expect100Continue = false;
-            client = new MetroServiceSoapClient(endpointConfigurationName: "MetroServiceSoap12");
+            mainCotr = new MainWindowController();
         }
 
         private void UpdateBtn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if(!string.IsNullOrEmpty(secretKeyTb.Text))
+                (var lstUsers, string message) = mainCotr.GetUsers(secretKeyTb.Text);
+                if(lstUsers == null)
                 {
-                    var response = client.GetUsers(secretKeyTb.Text);
-                    var json = JObject.Parse(response);
-                    if(JsonHelper.GetValue(json, "error") == "0")
-                    {
-                        var jArray = json.GetValue("users").Value<JArray>();
-                        if (this.users == null) this.users = new List<User>();
-                        foreach(var item in jArray)
-                        {
-                            users.Add(new User(item.ToObject<JObject>()));
-                        }
-                        userDg.ItemsSource = users;
-                    } else
-                    {
-                        MessageBox.Show(JsonHelper.GetValue(json, "message"), "Ошибка");
-                    }
-                } else
+                    MessageBox.Show(message, "Ошибка");
+                }else
                 {
-                    MessageBox.Show("Поле \'Секретный ключ\' обязательно для заполнения", "Ошибка");
+                    userDg.ItemsSource = lstUsers;
                 }
             }
             catch (Exception ex)
