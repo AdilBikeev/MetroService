@@ -12,8 +12,8 @@
     <Grid>
         <StackPanel>
             <DockPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TabControl HorizontalContentAlignment="Stretch">
+                <StackPanel Orientation="Horizontal" Width="400">
+                    <TabControl HorizontalContentAlignment="Stretch" Width="400">
                         <TabItem Header="Пользователи">
                             <StackPanel>
                                 <DataGrid x:Name="userDg" AutoGenerateColumns="False" CanUserReorderColumns="False" RowDetailsVisibilityMode="Visible" IsReadOnly="True"> 
@@ -30,7 +30,29 @@
                                 </GroupBox>
                             </StackPanel>
                         </TabItem>
-                        <TabItem Header="Документы"></TabItem>
+                        <TabItem Header="Документы">
+                            <StackPanel>
+                                <DataGrid x:Name="documentDg" AutoGenerateColumns="False" CanUserReorderColumns="False" RowDetailsVisibilityMode="Visible" IsReadOnly="True">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Заголовок" Binding="{Binding HEADER}" IsReadOnly="True"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="Название" Binding="{Binding NAME}" IsReadOnly="True"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="Содержание" Binding="{Binding CONTENT}" IsReadOnly="True"></DataGridTextColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <StackPanel Orientation="Horizontal">
+                                    <GroupBox Header="Логин" Width="200">
+                                        <GroupItem>
+                                            <TextBox x:Name="loginTb"></TextBox>
+                                        </GroupItem>
+                                    </GroupBox>
+                                    <GroupBox Header="Пароль" Width="200">
+                                        <GroupItem>
+                                            <TextBox x:Name="passwordTb"></TextBox>
+                                        </GroupItem>
+                                    </GroupBox>
+                                </StackPanel>
+                            </StackPanel>
+                        </TabItem>
                     </TabControl>
                 </StackPanel>
                 <Button x:Name="updateBtn" Click="UpdateBtn_Click">Обновить таблицу из БД</Button>
