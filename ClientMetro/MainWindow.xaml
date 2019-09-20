@@ -13,7 +13,7 @@
         <StackPanel>
             <DockPanel>
                 <StackPanel Orientation="Horizontal" Width="400">
-                    <TabControl HorizontalContentAlignment="Stretch" Width="400">
+                    <TabControl x:Name="tabControl" HorizontalContentAlignment="Stretch" Width="400">
                         <TabItem Header="Пользователи">
                             <StackPanel>
                                 <DataGrid x:Name="userDg" AutoGenerateColumns="False" CanUserReorderColumns="False" RowDetailsVisibilityMode="Visible" IsReadOnly="True"> 

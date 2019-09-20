@@ -38,13 +38,35 @@ namespace ClientMetro
         {
             try
             {
-                (var lstUsers, string message) = mainCotr.GetUsers(secretKeyTb.Text);
-                if(lstUsers == null)
+                string selectNameTab = string.Empty;
+                TabItem item = (tabControl.SelectedValue as TabItem);
+                selectNameTab = item.Header.ToString();
+
+                string message;
+
+
+                switch (selectNameTab)
+                {
+                    case "Пользователи":
+                    {
+                        var list = mainCotr.GetUsers(secretKeyTb.Text, out message);
+                        if(list != null) {  userDg.ItemsSource = list; }
+                        break;
+                    }
+                    case "Документы":
+                    {
+                        var list = mainCotr.GetDocuments(loginTb.Text, passwordTb.Text, out message);
+                        if (list != null) { documentDg.ItemsSource = list; }
+                        break;
+                    }
+                    default:
+                        message = string.Empty;
+                        break;
+                }
+
+                if(message != string.Empty)
                 {
                     MessageBox.Show(message, "Ошибка");
-                }else
-                {
-                    userDg.ItemsSource = lstUsers;
                 }
             }
             catch (Exception ex)
