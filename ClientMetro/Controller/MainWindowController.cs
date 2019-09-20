@@ -108,31 +108,35 @@ namespace ClientMetro.Controller
         /// <returns>Список пользователей</returns>
         public List<User> GetUsers(string secret_key, out string message)
         {
-            if (!string.IsNullOrEmpty(secret_key))
+            if(this.Ping(out message))
             {
-                var response = client.GetUsers(secret_key);
-                var json = JObject.Parse(response);
-                if (JsonHelper.GetValue(json, "error") == "0")
+                if (!string.IsNullOrEmpty(secret_key))
                 {
-                    var jArray = json.GetValue("users").Value<JArray>();
-                    if (this.users == null) this.users = new List<User>();
-                    foreach (var item in jArray)
+                    var response = client.GetUsers(secret_key);
+                    var json = JObject.Parse(response);
+                    if (JsonHelper.GetValue(json, "error") == "0")
                     {
-                        users.Add(new User(item.ToObject<JObject>()));
+                        var jArray = json.GetValue("users").Value<JArray>();
+                        if (this.users == null) this.users = new List<User>();
+                        foreach (var item in jArray)
+                        {
+                            users.Add(new User(item.ToObject<JObject>()));
+                        }
+                        message = string.Empty;
+                        return this.users;
                     }
-                    message = string.Empty;
-                    return this.users;
+                    else
+                    {
+                        message = JsonHelper.GetValue(json, "message");
+                   
+                    }
                 }
                 else
                 {
-                    message = JsonHelper.GetValue(json, "message");
-                   
+                    message = "Поле \'Секретный ключ\' обязательно для заполнения";
                 }
             }
-            else
-            {
-                message = "Поле \'Секретный ключ\' обязательно для заполнения";
-            }
+
             return null;
         }
 
@@ -145,30 +149,34 @@ namespace ClientMetro.Controller
         /// <returns>Список документов</returns>
         public List<Document> GetDocuments(string login, string password, out string message)
         {
-            if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password))
+            if(this.Ping(out message))
             {
-                var response = client.GetDocuments(login, password);
-                var json = JObject.Parse(response);
-                if (JsonHelper.GetValue(json, "error") == "0")
+                if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password))
                 {
-                    var jArray = json.GetValue("documents").Value<JArray>();
-                    if (this.documents == null) this.documents = new List<Document>();
-                    foreach (var item in jArray)
+                    var response = client.GetDocuments(login, password);
+                    var json = JObject.Parse(response);
+                    if (JsonHelper.GetValue(json, "error") == "0")
                     {
-                        this.documents.Add(new Document(item.ToObject<JObject>()));
+                        var jArray = json.GetValue("documents").Value<JArray>();
+                        if (this.documents == null) this.documents = new List<Document>();
+                        foreach (var item in jArray)
+                        {
+                            this.documents.Add(new Document(item.ToObject<JObject>()));
+                        }
+                        message = string.Empty;
+                        return this.documents;
                     }
-                    message = string.Empty;
-                    return this.documents;
+                    else
+                    {
+                        message = JsonHelper.GetValue(json, "message");
+                    }
                 }
                 else
                 {
-                    message = JsonHelper.GetValue(json, "message");
+                    message = "Вы не ввели логин/пароль";
                 }
             }
-            else
-            {
-                message = "Вы не ввели логин/пароль";
-            }
+
             return null;
         }
     }
