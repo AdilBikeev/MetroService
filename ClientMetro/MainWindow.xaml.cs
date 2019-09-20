@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using ClientMetro.Models;
 using Newtonsoft.Json.Linq;
 using ClientMetro.HelperMethods;
+using System.Net;
 
 namespace ClientMetro
 {
@@ -32,11 +33,12 @@ namespace ClientMetro
         /// <summary>
         /// Список пользователей
         /// </summary>
-        private List<User> users;
+        private List<User> users = null;
         public MainWindow()
         {
             InitializeComponent();
-            client = new MetroServiceSoapClient();
+            ServicePointManager.Expect100Continue = false;
+            client = new MetroServiceSoapClient(endpointConfigurationName: "MetroServiceSoap12");
         }
 
         private void UpdateBtn_Click(object sender, RoutedEventArgs e)
@@ -50,6 +52,7 @@ namespace ClientMetro
                     if(JsonHelper.GetValue(json, "error") == "0")
                     {
                         var jArray = json.GetValue("users").Value<JArray>();
+                        if (this.users == null) this.users = new List<User>();
                         foreach(var item in jArray)
                         {
                             users.Add(new User(item.ToObject<JObject>()));

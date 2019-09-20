@@ -16,7 +16,7 @@
                     <TabControl HorizontalContentAlignment="Stretch">
                         <TabItem Header="Пользователи">
                             <StackPanel>
-                                <DataGrid x:Name="userDg">
+                                <DataGrid x:Name="userDg" AutoGenerateColumns="False" CanUserReorderColumns="False" RowDetailsVisibilityMode="Visible" IsReadOnly="True"> 
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="id" Binding="{Binding ID}" IsReadOnly="True"></DataGridTextColumn>
                                         <DataGridTextColumn Header="Логин" Binding="{Binding LOGIN}" IsReadOnly="True"></DataGridTextColumn>
@@ -33,7 +33,7 @@
                         <TabItem Header="Документы"></TabItem>
                     </TabControl>
                 </StackPanel>
-                <Button x:Name="updateBtn" Click="UpdateBtn_Click">Обновить</Button>
+                <Button x:Name="updateBtn" Click="UpdateBtn_Click">Обновить таблицу из БД</Button>
             </DockPanel>
             <DockPanel></DockPanel>
         </StackPanel>
