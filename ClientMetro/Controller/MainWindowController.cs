@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using System.Xml;
+using System.Xml.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ClientMetro.HelperMethods;
@@ -13,6 +15,16 @@ namespace ClientMetro.Controller
 {
     public class MainWindowController
     {
+        /// <summary>
+        /// Логин для доступа к сервису
+        /// </summary>
+        private string login;
+
+        /// <summary>
+        /// Пароль для доступа к сервису
+        /// </summary>
+        private string password;
+
         /// <summary>
         /// Объект для обращения к веб-сервису Метро
         /// </summary>
@@ -33,10 +45,59 @@ namespace ClientMetro.Controller
             Initialize();
         }
 
+        /// <summary>
+        /// Инициализирует клиента для взаимодейсвтия с сервисом
+        /// </summary>
         private void Initialize()
         {
             ServicePointManager.Expect100Continue = false;
             client = new MetroServiceSoapClient(endpointConfigurationName: "MetroServiceSoap12");
+
+            this.initConfi();
+        }
+
+        /// <summary>
+        /// Парсит необходимые конфигурационные настройки из xml файла
+        /// </summary>
+        private void initConfi()
+        {
+            XmlDocument xml = new XmlDocument();
+            xml.Load(@"../../ConfigureFiles/ClientConfig.xml");
+
+            XmlElement element = xml.DocumentElement;
+
+            var login = element["login"].InnerText;
+            var password = element["password"].InnerText;
+
+            if (!string.IsNullOrEmpty(login))
+            {
+                this.login = login;
+            }
+
+            if (!string.IsNullOrEmpty(password))
+            {
+                this.password = password;
+            }
+        }
+
+        public bool Ping(out string message)
+        {
+            this.initConfi();
+
+            if (!string.IsNullOrEmpty(this.login) && !string.IsNullOrEmpty(this.password))
+            {
+                var response = client.Ping(login, password);
+                var json = JObject.Parse(response);
+                message = JsonHelper.GetValue(json, "message");
+                if (JsonHelper.GetValue(json, "error") == "0")
+                {
+                    return true;
+                }
+            }else
+            {
+                message = "Неверно указан логин/пароль";
+            }
+            return false;
         }
 
         /// <summary>

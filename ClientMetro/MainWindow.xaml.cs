@@ -66,12 +66,31 @@ namespace ClientMetro
 
                 if(message != string.Empty)
                 {
-                    MessageBox.Show(message, "Ошибка");
+                    MessageBox.Show(message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка");
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void CheckConnBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string message;
+                if( mainCotr.Ping(out message) )
+                {
+                    MessageBox.Show("Сервис доступен !", "Сообщение", MessageBoxButton.OK, MessageBoxImage.Information);
+                } else
+                {
+                    MessageBox.Show(message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

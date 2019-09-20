@@ -51,6 +51,7 @@
                                         </GroupItem>
                                     </GroupBox>
                                 </StackPanel>
+                                <Button x:Name="checkConnBtn" Click="CheckConnBtn_Click">Проверить подключение к БД</Button>
                             </StackPanel>
                         </TabItem>
                     </TabControl>
