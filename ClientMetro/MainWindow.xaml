@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ClientMetro"
         mc:Ignorable="d"
-        Title="Metro Client" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <ResourceDictionary Source="./Dictionary/mainDictionary.xaml"/>
     </Window.Resources>
@@ -15,17 +15,25 @@
                 <StackPanel Orientation="Horizontal">
                     <TabControl HorizontalContentAlignment="Stretch">
                         <TabItem Header="Пользователи">
-                            <DataGrid>
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="id" Binding="{Binding ID}" IsReadOnly="True"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Логин" Binding="{Binding LOGIN}" IsReadOnly="True"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Пароль" Binding="{Binding PASSWORD}" IsReadOnly="True"></DataGridTextColumn>
-                                </DataGrid.Columns>
-                            </DataGrid>
+                            <StackPanel>
+                                <DataGrid x:Name="userDg">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="id" Binding="{Binding ID}" IsReadOnly="True"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="Логин" Binding="{Binding LOGIN}" IsReadOnly="True"></DataGridTextColumn>
+                                        <DataGridTextColumn Header="Пароль" Binding="{Binding PASSWORD}" IsReadOnly="True"></DataGridTextColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <GroupBox Header="Секретный ключ">
+                                    <GroupItem>
+                                        <TextBox x:Name="secretKeyTb"></TextBox>
+                                    </GroupItem>
+                                </GroupBox>
+                            </StackPanel>
                         </TabItem>
                         <TabItem Header="Документы"></TabItem>
                     </TabControl>
                 </StackPanel>
+                <Button x:Name="updateBtn" Click="UpdateBtn_Click">Обновить</Button>
             </DockPanel>
             <DockPanel></DockPanel>
         </StackPanel>
