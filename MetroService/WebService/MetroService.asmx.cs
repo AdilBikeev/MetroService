@@ -18,6 +18,12 @@ namespace MetroService.WebService
     [System.Web.Script.Services.ScriptService]
     public class MetroService : System.Web.Services.WebService
     {
+
+        public MetroService ()
+        {
+            MetroDbEntities = new MetroDbEntities();
+        }
+
         /// <summary>
         /// Объект для взаимодействия с БД
         /// </summary>
@@ -107,7 +113,6 @@ namespace MetroService.WebService
             {
                 try
                 {
-                    MetroDbEntities = new MetroDbEntities();
                     MetroDbEntities.User.Load();
 
                     var lstUsers = MetroDbEntities.User.Local;
@@ -159,9 +164,6 @@ namespace MetroService.WebService
                 }
                 else
                 {
-                    
-                    MetroDbEntities = new MetroDbEntities();
-                    
                     MetroDbEntities.Document.Load();
                     if(isUserExist(login, password))
                     { 
