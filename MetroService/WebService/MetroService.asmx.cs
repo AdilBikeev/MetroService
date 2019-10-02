@@ -23,6 +23,11 @@ namespace MetroService.WebService
         /// </summary>
         private MetroDbEntities MetroDbEntities;
 
+        public MetroService ()
+        {
+            this.MetroDbEntities = new MetroDbEntities();
+        }
+
         /// <summary>
         /// Возвращает стандартный объект с положительным ответом
         /// </summary>
@@ -107,7 +112,6 @@ namespace MetroService.WebService
             {
                 try
                 {
-                    MetroDbEntities = new MetroDbEntities();
                     MetroDbEntities.User.Load();
 
                     var lstUsers = MetroDbEntities.User.Local;
@@ -159,8 +163,6 @@ namespace MetroService.WebService
                 }
                 else
                 {
-                    
-                    MetroDbEntities = new MetroDbEntities();
                     
                     MetroDbEntities.Document.Load();
                     if(isUserExist(login, password))
