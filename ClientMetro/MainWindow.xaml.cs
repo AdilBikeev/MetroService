@@ -50,13 +50,13 @@ namespace ClientMetro
                     case "Пользователи":
                     {
                         var list = mainCotr.GetUsers(secretKeyTb.Text, out message);
-                        if(list != null) {  userDg.ItemsSource = list; }
+                        if(list != null) {  userDg.ItemsSource = list;  userDg.UpdateLayout(); }
                         break;
                     }
                     case "Документы":
                     {
                         var list = mainCotr.GetDocuments(loginTb.Text, passwordTb.Text, out message);
-                        if (list != null) { documentDg.ItemsSource = list; }
+                        if (list != null) { documentDg.ItemsSource = list; documentDg.UpdateLayout(); }
                         break;
                     }
                     default:
