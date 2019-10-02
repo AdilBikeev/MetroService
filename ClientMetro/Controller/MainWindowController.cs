@@ -30,16 +30,6 @@ namespace ClientMetro.Controller
         /// </summary>
         private MetroServiceSoapClient client;
 
-        /// <summary>
-        /// Список пользователей
-        /// </summary>
-        private List<User> users = null;
-
-        /// <summary>
-        /// Список документов
-        /// </summary>
-        private List<Document> documents = null;
-
         public MainWindowController()
         {
             Initialize();
@@ -106,7 +96,7 @@ namespace ClientMetro.Controller
         /// <param name="secret_key">Секретный ключ</param>
         /// <param name="message">Сообщение полученное в качестве ответа от сервиса</param>
         /// <returns>Список пользователей</returns>
-        public List<User> GetUsers(string secret_key, out string message)
+        public HashSet<User> GetUsers(string secret_key, out string message)
         {
             if(this.Ping(out message))
             {
@@ -117,13 +107,13 @@ namespace ClientMetro.Controller
                     if (JsonHelper.GetValue(json, "error") == "0")
                     {
                         var jArray = json.GetValue("users").Value<JArray>();
-                        if (this.users == null) this.users = new List<User>();
+                        var users = new HashSet<User>();
                         foreach (var item in jArray)
                         {
                             users.Add(new User(item.ToObject<JObject>()));
                         }
                         message = string.Empty;
-                        return this.users;
+                        return users;
                     }
                     else
                     {
@@ -158,13 +148,13 @@ namespace ClientMetro.Controller
                     if (JsonHelper.GetValue(json, "error") == "0")
                     {
                         var jArray = json.GetValue("documents").Value<JArray>();
-                        if (this.documents == null) this.documents = new List<Document>();
+                        var documents = new List<Document>();
                         foreach (var item in jArray)
                         {
-                            this.documents.Add(new Document(item.ToObject<JObject>()));
+                            documents.Add(new Document(item.ToObject<JObject>()));
                         }
                         message = string.Empty;
-                        return this.documents;
+                        return documents;
                     }
                     else
                     {
