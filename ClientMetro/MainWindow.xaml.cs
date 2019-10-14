@@ -36,6 +36,8 @@ namespace ClientMetro
 
         private void UpdateBtn_Click(object sender, RoutedEventArgs e)
         {
+            this.IsEnabled = false;
+            MessageBox.Show("Пожалуйста подождите, операция выполняется", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
             try
             {
                 string selectNameTab = string.Empty;
@@ -67,11 +69,17 @@ namespace ClientMetro
                 if(message != string.Empty)
                 {
                     MessageBox.Show(message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }else
+                {
+                    MessageBox.Show("Операция прошла успешно !", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }finally
+            {
+                this.IsEnabled = true;
             }
         }
 
