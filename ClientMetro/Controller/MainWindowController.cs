@@ -26,6 +26,11 @@ namespace ClientMetro.Controller
         private string password;
 
         /// <summary>
+        /// Секретный ключ для доступа к некоторым методам сервиса
+        /// </summary>
+        private string secret_key;
+
+        /// <summary>
         /// Объект для обращения к веб-сервису Метро
         /// </summary>
         private MetroServiceSoapClient client;
@@ -58,6 +63,7 @@ namespace ClientMetro.Controller
 
             var login = element["login"].InnerText;
             var password = element["password"].InnerText;
+            var secret_key = element["secret_key"].InnerText;
 
             if (!string.IsNullOrEmpty(login))
             {
@@ -67,6 +73,11 @@ namespace ClientMetro.Controller
             if (!string.IsNullOrEmpty(password))
             {
                 this.password = password;
+            }
+
+            if (!string.IsNullOrEmpty(secret_key))
+            {
+                this.secret_key = secret_key;
             }
         }
 
