@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Web.Services;
 using Newtonsoft.Json.Linq;
 using MetroService.Models;
+using MetroService.HelperMethods;
 
 namespace MetroService.WebService
 {
@@ -98,6 +99,69 @@ namespace MetroService.WebService
                 return true;
             else 
                 return false;
+        }
+
+        /// <summary>
+        /// Обновляет в БД для пользователя список документов, с которыми он ознакомился
+        /// </summary>
+        /// <param name="secret_key">Секретный ключ</param>
+        /// <param name="login">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <param name="docFamiliarLst">Список всех названий документов, с которыми ознакомился пользователь
+        /// перечисленные в виде строки через запятую или пустая строка, если таких документов нет
+        /// </param>
+        /// <returns>JSON объект с кодом ошибки и сопровождающим сообщением.</returns>
+        [WebMethod(Description = "Обновляет в БД для пользователя список документов, с которыми он ознакомился.")]
+        public string UpdateListNotFamiliarDoc(string secret_key, string login, string password, string docFamiliarLst)
+        {
+            JObject response = this.getObjResponse();
+
+            try
+            {
+                if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+                {
+                    response["error"] = "1";
+                    response["message"] = "Вы не указали логин/пароль";
+                }
+                else
+                {
+                    if (isUserExist(login, password))
+                    {
+                        if(string.IsNullOrEmpty(docFamiliarLst))
+                        {
+                            docFamiliarLst = string.Empty;
+                        }
+
+                        MetroDbEntities1.Document.Load();
+                        var docsAll = MetroDbEntities1.Document.Local;
+
+                        MetroDbEntities1.NotFamiliarDocuments.Load();
+                        var user = MetroDbEntities1.NotFamiliarDocuments.FirstOrDefault(x => x.user_Login == login);
+
+                        //Парсим список документов с которыми ознакомился пользователь
+                        var familiarLst = docFamiliarLst.Split(',');
+
+                        //Получаем список документов с которыми пользователь не ознакомился
+                        var docsNotFamiliarLst = docsAll.TakeWhile(x => familiarLst.FirstOrDefault(y => y == x.Name) == null);
+
+                        var i = MetroDbEntities1.NotFamiliarDocuments.Local.IndexOf(user);
+                        MetroDbEntities1.NotFamiliarDocuments.Local[i].names_DocumentsList = DocumentHelper.ParceDocument(docsNotFamiliarLst.ToList());
+
+                        MetroDbEntities1.SaveChanges();
+                    }
+                    else
+                    {
+                        response["error"] = "5";
+                        response["message"] = "Указан неверный логин/пароль";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response["error"] = "30";
+                response["message"] = ex.Message;
+            }
+            return response.ToString();
         }
 
         /// <summary>

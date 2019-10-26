@@ -132,6 +132,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="HelperMethods\DocumentHelper.cs" />
     <Compile Include="Models\Document.cs">
       <DependentUpon>MetroDbModel.tt</DependentUpon>
     </Compile>
@@ -149,6 +150,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MetroDbModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NotFamiliarDocuments.cs">
+      <DependentUpon>MetroDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>MetroDbModel.tt</DependentUpon>
