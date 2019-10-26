@@ -439,5 +439,60 @@ namespace MetroService.WebService
             }
             return response.ToString();
         }
+
+        /// <summary>
+        /// Изменяет данные дкоумента
+        /// </summary>
+        /// <param name="secret_key">Секретный ключ</param>
+        /// <param name="login">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <param name="name">Новый заголовок документа</param>
+        /// <param name="header">Новый заголовок документа</param>
+        /// <param name="content">Новый контент документа</param>
+        /// <returns>JSON объект с результатом выполнения операции</returns>
+        [WebMethod(Description = "Изменяет данные дкоумента.")]
+        public string ChangeDataDocument(string secret_key, string login, string password, string name, string header, string content)
+        {
+            JObject response = this.getObjResponse();
+
+            try
+            {
+                if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+                {
+                    response["error"] = "1";
+                    response["message"] = "Вы не указали логин/пароль";
+                }
+                else
+                {
+                    if (isUserExist(login, password))
+                    {
+                        if (isDocumentExist(name))
+                        {
+                            var changeItem = MetroDbEntities1.Document.First(x => x.Name == name);
+                            var i = MetroDbEntities1.Document.Local.IndexOf(changeItem);
+                            MetroDbEntities1.Document.Local[i].header = header;
+                            MetroDbEntities1.Document.Local[i].content = content;
+                            MetroDbEntities1.SaveChanges();
+                        }
+                        else
+                        {
+                            response["error"] = "41";
+                            response["message"] = "Документа с указанным названием не существует";
+                        }
+                    }
+                    else
+                    {
+                        response["error"] = "5";
+                        response["message"] = "Неверный логин или пароль";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response["error"] = "30";
+                response["message"] = ex.Message;
+            }
+            return response.ToString();
+        }
     }
 }
