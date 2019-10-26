@@ -22,11 +22,11 @@ namespace MetroService.WebService
         /// <summary>
         /// Объект для взаимодействия с БД
         /// </summary>
-        private MetroDbEntities MetroDbEntities;
+        private MetroDbEntities1 MetroDbEntities1;
 
-        public MetroService ()
+        public MetroService()
         {
-            this.MetroDbEntities = new MetroDbEntities();
+            this.MetroDbEntities1 = new MetroDbEntities1();
         }
 
         /// <summary>
@@ -43,17 +43,22 @@ namespace MetroService.WebService
             return response;
         }
 
-
+        /// <summary>
+        /// Проверяет существует ли в БД пользователь с указанным login и password
+        /// </summary>
+        /// <param name="login">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <returns>Возвращает true - пользователь с указанными данными существует и false в ином случаи</returns>
         private bool isUserExist(string login, string password)
         {
-            MetroDbEntities.User.Load();
-            var lstUsers = MetroDbEntities.User.Local;
-            
-            if(lstUsers.Count > 0)
+            MetroDbEntities1.User.Load();
+            var lstUsers = MetroDbEntities1.User.Local;
+
+            if (lstUsers.Count > 0)
             {
-                foreach(var user in lstUsers)
+                foreach (var user in lstUsers)
                 {
-                    if(user.login == login && user.password == password)
+                    if (user.login == login && user.password == password)
                     {
                         return true;
                     }
@@ -61,6 +66,22 @@ namespace MetroService.WebService
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Проверяет существует ли в БД пользователь с указанным login
+        /// </summary>
+        /// <param name="login">Логин</param>
+        /// <returns>Возвращает true - пользователь с указанными логином существует и false в ином случаи</returns>
+        private bool isLoginExist(string login)
+        {
+            MetroDbEntities1.User.Load();
+            var lstUsers = MetroDbEntities1.User.Local;
+
+            if (lstUsers.FirstOrDefault(x => x.login == login) != null)
+                return true;
+            else 
+                return false;
         }
 
         /// <summary>
@@ -77,13 +98,13 @@ namespace MetroService.WebService
 
             try
             {
-                if( string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+                if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
                 {
                     response["error"] = "1";
                     response["message"] = "Вы не указали логин/пароль";
                 } else
                 {
-                    if(login!= "1234admin1234metro1234service" || password != "43211234")
+                    if (login != "1234admin1234metro1234service" || password != "43211234")
                     {
                         response["error"] = "5";
                         response["message"] = "Неверно указан логин или пароль логин/пароль";
@@ -109,27 +130,26 @@ namespace MetroService.WebService
         {
             JObject response = this.getObjResponse();
 
-            if(!string.IsNullOrEmpty(sekret_key) && sekret_key == "rye3firbvlvjsne3n25123m2n1")
+            if (!string.IsNullOrEmpty(sekret_key) && sekret_key == "rye3firbvlvjsne3n25123m2n1")
             {
                 try
                 {
-                    MetroDbEntities.User.Load();
+                    MetroDbEntities1.User.Load();
 
-                    var lstUsers = MetroDbEntities.User.Local;
-                    if(lstUsers.Count > 0)
+                    var lstUsers = MetroDbEntities1.User.Local;
+                    if (lstUsers.Count > 0)
                     {
                         JArray users = new JArray();
-                        foreach(var item in lstUsers)
+                        foreach (var item in lstUsers)
                         {
                             JObject user = new JObject();
-                            user.Add("Id", item.Id);
                             user.Add("login", item.login);
                             user.Add("password", item.password);
 
                             users.Add(user);
                         }
                         response.Add("users", users);
-                    }else
+                    } else
                     {
                         response["error"] = "505";
                         response["message"] = "На сервисе нет зарегестрированных пользователей";
@@ -164,14 +184,14 @@ namespace MetroService.WebService
                 }
                 else
                 {
-                    MetroDbEntities.Document.Load();
-                    if(isUserExist(login, password))
-                    { 
-                        var lstDocuments = MetroDbEntities.Document.Local;
-                        if(lstDocuments.Count > 0)
+                    MetroDbEntities1.Document.Load();
+                    if (isUserExist(login, password))
+                    {
+                        var lstDocuments = MetroDbEntities1.Document.Local;
+                        if (lstDocuments.Count > 0)
                         {
                             var documents = new JArray();
-                        
+
                             foreach (var doc in lstDocuments)
                             {
                                 var document = new JObject();
@@ -188,7 +208,7 @@ namespace MetroService.WebService
                             response["error"] = "505";
                             response["message"] = "На сервисе не нашелся ни один документ";
                         }
-                    }else
+                    } else
                     {
                         response["error"] = "5";
                         response["message"] = "Указан неверный логин/пароль";
@@ -203,6 +223,53 @@ namespace MetroService.WebService
             return response.ToString();
         }
 
+        /// <summary>
+        /// Добавляет пользователя в БД с указанным login и password
+        /// </summary>
+        /// <param name="secret_key">Секретный ключ</param>
+        /// <param name="login">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <returns>JSON объект с результатом выполнения операции</returns>
+        [WebMethod(Description = "Добавляет пользователя в БД с указанным login и password")]
+        public string AddUser(string secret_key, string login, string password)
+        {
+            JObject response = this.getObjResponse();
+
+            try
+            {
+                if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+                {
+                    response["error"] = "1";
+                    response["message"] = "Вы не указали логин/пароль";
+                }
+                else
+                {
+                    if (!isLoginExist(login))
+                    {
+                        MetroDbEntities1.User.Add(new User
+                        {
+                            login = login,
+                            password = password
+                        });
+
+                        MetroDbEntities1.SaveChanges();
+                        response["message"] = "Пользователь успешно добавлен в БД";
+                    }
+                    else
+                    {
+                        response["error"] = "5";
+                        response["message"] = "Пользователь с указанным логином уже существует";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response["error"] = "30";
+                response["message"] = ex.Message;
+            }
+            return response.ToString();
+        }
+        
         /// <summary>
         /// Удаляет пользователя из БД
         /// </summary>
@@ -224,12 +291,15 @@ namespace MetroService.WebService
                 }
                 else
                 {
-                    MetroDbEntities.User.Load();
+                    MetroDbEntities1.User.Load();
 
-                    var lstUsers = MetroDbEntities.User.Local;
-                    var userDel = lstUsers.First(x => x.login == login && x.password == password);
+                    var lstUsers = MetroDbEntities1.User.Local;
+                    var userDel = lstUsers.FirstOrDefault(x => x.login == login && x.password == password);
                     if (userDel != null)
-                        MetroDbEntities.User.Remove(userDel);
+                    {
+                        MetroDbEntities1.User.Remove(userDel);
+                        MetroDbEntities1.SaveChanges();
+                    }
                     else
                     {
                         response["error"] = "40";

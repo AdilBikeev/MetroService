@@ -13,10 +13,10 @@ namespace MetroService.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class MetroDbEntities : DbContext
+    public partial class MetroDbEntities1 : DbContext
     {
-        public MetroDbEntities()
-            : base("name=MetroDbEntities")
+        public MetroDbEntities1()
+            : base("name=MetroDbEntities1")
         {
         }
     
