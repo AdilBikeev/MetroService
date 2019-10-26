@@ -144,9 +144,19 @@ namespace MetroService.WebService
                         //Получаем список документов с которыми пользователь не ознакомился
                         var docsNotFamiliarLst = docsAll.TakeWhile(x => familiarLst.FirstOrDefault(y => y == x.Name) == null);
 
-                        var i = MetroDbEntities1.NotFamiliarDocuments.Local.IndexOf(user);
-                        MetroDbEntities1.NotFamiliarDocuments.Local[i].names_DocumentsList = DocumentHelper.ParceDocument(docsNotFamiliarLst.ToList());
-
+                        //Если пользователь впервые зарегестрирвоался
+                        if(user == null)
+                        {
+                            MetroDbEntities1.NotFamiliarDocuments.Add(new NotFamiliarDocuments
+                            {
+                                user_Login = login,
+                                names_DocumentsList = DocumentHelper.ParceDocument(docsNotFamiliarLst.ToList())
+                            });
+                        }else
+                        {
+                            var i = MetroDbEntities1.NotFamiliarDocuments.Local.IndexOf(user);
+                            MetroDbEntities1.NotFamiliarDocuments.Local[i].names_DocumentsList = DocumentHelper.ParceDocument(docsNotFamiliarLst.ToList());
+                        }
                         MetroDbEntities1.SaveChanges();
                     }
                     else
@@ -334,6 +344,8 @@ namespace MetroService.WebService
 
                         MetroDbEntities1.SaveChanges();
                         response["message"] = "Пользователь успешно добавлен в БД";
+                        var result = UpdateListNotFamiliarDoc(secret_key, login, password, string.Empty);
+                        response.Add("inner_message", JObject.Parse(result));
                     }
                     else
                     {
