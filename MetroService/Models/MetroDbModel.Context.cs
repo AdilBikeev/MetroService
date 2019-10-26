@@ -26,6 +26,7 @@ namespace MetroService.Models
         }
     
         public virtual DbSet<Document> Document { get; set; }
+        public virtual DbSet<NotFamiliarDocuments> NotFamiliarDocuments { get; set; }
         public virtual DbSet<User> User { get; set; }
     }
 }

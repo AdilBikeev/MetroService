@@ -16,5 +16,7 @@ namespace MetroService.Models
     {
         public string login { get; set; }
         public string password { get; set; }
+    
+        public virtual NotFamiliarDocuments NotFamiliarDocuments { get; set; }
     }
 }
