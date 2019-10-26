@@ -494,5 +494,43 @@ namespace MetroService.WebService
             }
             return response.ToString();
         }
+
+        [WebMethod(Description = "Предоставляет список документов для пользователя с указанным логином и паролем.")]
+        public string GetNotFamiliarDocuments(string secret_key, string login, string password)
+        {
+            JObject response = this.getObjResponse();
+
+            try
+            {
+                if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+                {
+                    response["error"] = "1";
+                    response["message"] = "Вы не указали логин/пароль";
+                }
+                else
+                {
+                    if (isUserExist(login, password))
+                    {
+                        MetroDbEntities1.NotFamiliarDocuments.Load();
+                        var lstDocuments = MetroDbEntities1.NotFamiliarDocuments.Local;
+                        var user = lstDocuments.FirstOrDefault(x => x.user_Login == login);
+                        var docNotFamiliarLst = new JObject();
+                        response.Add("docNotFamiliarLst", user.names_DocumentsList);
+                    }
+                    else
+                    {
+                        response["error"] = "5";
+                        response["message"] = "Указан неверный логин/пароль";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response["error"] = "30";
+                response["message"] = ex.Message;
+            }
+            return response.ToString();
+        }
+
     }
 }
