@@ -398,6 +398,21 @@ namespace MetroService.WebService
                             });
                             MetroDbEntities1.SaveChanges();
                             response["message"] = "Документ успешно добавлен в БД";
+
+                            try
+                            {
+                                MetroDbEntities1.NotFamiliarDocuments.Load();
+                                var size = MetroDbEntities1.NotFamiliarDocuments.Local.Count;
+                                for (int i = 0; i < size; i++)
+                                {
+                                    MetroDbEntities1.NotFamiliarDocuments.Local[i].names_DocumentsList += $",{name}";
+                                }
+                                MetroDbEntities1.SaveChanges();
+                            }
+                            catch (Exception exc)
+                            {
+                                response.Add("inner_message", exc.Message);
+                            }
                         }
                         else
                         {
