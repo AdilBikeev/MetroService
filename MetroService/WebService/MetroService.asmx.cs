@@ -344,6 +344,56 @@ namespace MetroService.WebService
             return response.ToString();
         }
 
+        /// <summary>
+        /// Удаляет документ с указанным названием
+        /// </summary>
+        /// <param name="secret_key">Секретный ключ</param>
+        /// <param name="login">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <param name="name">Название документа</param>
+        /// <returns>JSON объект с результатом выполнения операции</returns>
+        [WebMethod(Description = "Удаляет документ с указанным названием.")]
+        public string RemoveDocument(string secret_key, string login, string password, string name)
+        {
+            JObject response = this.getObjResponse();
+
+            try
+            {
+                if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+                {
+                    response["error"] = "1";
+                    response["message"] = "Вы не указали логин/пароль";
+                }
+                else
+                {
+                    if(isUserExist(login, password))
+                    {
+                        if(isDocumentExist(name))
+                        {
+                            var doc = MetroDbEntities1.Document.First(x => x.Name == name);
+                            MetroDbEntities1.Document.Remove(doc);
+                            MetroDbEntities1.SaveChanges();
+                        }
+                        else
+                        {
+                            response["error"] = "41";
+                            response["message"] = "Документа с указанным названием не существует";
+                        }
+                    }
+                    else
+                    {
+                        response["error"] = "5";
+                        response["message"] = "Неверный логин или пароль";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response["error"] = "30";
+                response["message"] = ex.Message;
+            }
+            return response.ToString();
+        }
 
         /// <summary>
         /// Удаляет пользователя из БД
@@ -353,7 +403,7 @@ namespace MetroService.WebService
         /// <param name="password">Пароль</param>
         /// <returns>JSON объект с результатом операции</returns>
         [WebMethod(Description = "Предоставляет список документов для пользователя с указанным логином и паролем.")]
-        public string RemoveUsers(string secret_key, string login, string password)
+        public string RemoveUser(string secret_key, string login, string password)
         {
             JObject response = this.getObjResponse();
 
