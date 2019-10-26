@@ -44,6 +44,22 @@ namespace MetroService.WebService
         }
 
         /// <summary>
+        /// Проверяет существует ли в БД документ с указанным name
+        /// </summary>
+        /// <param name="name">Название документа</param>
+        /// <returns>Возвращает true - документ с указанным названием существует и false в ином случаи</returns>
+        private bool isDocumentExist(string name)
+        {
+            MetroDbEntities1.Document.Load();
+            var lstUsers = MetroDbEntities1.Document.Local;
+            var doc = lstUsers.FirstOrDefault(x => x.Name == name);
+            if(doc != null)
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
         /// Проверяет существует ли в БД пользователь с указанным login и password
         /// </summary>
         /// <param name="login">Логин</param>
@@ -269,7 +285,66 @@ namespace MetroService.WebService
             }
             return response.ToString();
         }
-        
+
+        /// <summary>
+        /// Добавляет пользователя в БД с указанным названием, заголовком и контентом
+        /// </summary>
+        /// <param name="secret_key">Секретный ключ</param>
+        /// <param name="login">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <param name="name">Название документа</param>
+        /// <param name="header">Заголовок документа</param>
+        /// <param name="content">Содержимое документа</param>
+        /// <returns>JSON объект с результатом выполнения операции</returns>
+        [WebMethod(Description = "Добавляет пользователя в БД с указанным названием, заголовком и контентом")]
+        public string AddDocuments(string secret_key, string login, string password, string name, string header, string content)
+        {
+            JObject response = this.getObjResponse();
+
+            try
+            {
+                if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+                {
+                    response["error"] = "1";
+                    response["message"] = "Вы не указали логин/пароль";
+                }
+                else
+                {
+                    if (isUserExist(login, password))
+                    {
+                        if(!isDocumentExist(name))
+                        {
+                            MetroDbEntities1.Document.Add(new Document
+                            {
+                                Name = name,
+                                content = content,
+                                header = header
+                            });
+                            MetroDbEntities1.SaveChanges();
+                            response["message"] = "Документ успешно добавлен в БД";
+                        }
+                        else
+                        {
+                            response["error"] = "39";
+                            response["message"] = "Документ с указаным названием уже существует";
+                        }
+                    }
+                    else
+                    {
+                        response["error"] = "5";
+                        response["message"] = "Неверный логин или пароль";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response["error"] = "30";
+                response["message"] = ex.Message;
+            }
+            return response.ToString();
+        }
+
+
         /// <summary>
         /// Удаляет пользователя из БД
         /// </summary>
