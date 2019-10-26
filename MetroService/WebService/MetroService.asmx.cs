@@ -19,11 +19,6 @@ namespace MetroService.WebService
     public class MetroService : System.Web.Services.WebService
     {
 
-        public MetroService ()
-        {
-            MetroDbEntities = new MetroDbEntities();
-        }
-
         /// <summary>
         /// Объект для взаимодействия с БД
         /// </summary>
@@ -197,6 +192,48 @@ namespace MetroService.WebService
                     {
                         response["error"] = "5";
                         response["message"] = "Указан неверный логин/пароль";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response["error"] = "30";
+                response["message"] = ex.Message;
+            }
+            return response.ToString();
+        }
+
+        /// <summary>
+        /// Удаляет пользователя из БД
+        /// </summary>
+        /// <param name="secret_key">Секретный ключ</param>
+        /// <param name="login">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <returns>JSON объект с результатом операции</returns>
+        [WebMethod(Description = "Предоставляет список документов для пользователя с указанным логином и паролем.")]
+        public string RemoveUsers(string secret_key, string login, string password)
+        {
+            JObject response = this.getObjResponse();
+
+            try
+            {
+                if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+                {
+                    response["error"] = "1";
+                    response["message"] = "Вы не указали логин/пароль";
+                }
+                else
+                {
+                    MetroDbEntities.User.Load();
+
+                    var lstUsers = MetroDbEntities.User.Local;
+                    var userDel = lstUsers.First(x => x.login == login && x.password == password);
+                    if (userDel != null)
+                        MetroDbEntities.User.Remove(userDel);
+                    else
+                    {
+                        response["error"] = "40";
+                        response["message"] = "Пользователь с указанным логином и паролем не найден";
                     }
                 }
             }
