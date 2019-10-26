@@ -78,6 +78,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Controller\MainWindowController.cs" />
+    <Compile Include="HelperMethods\DocumentHelper.cs" />
     <Compile Include="HelperMethods\JsonHelper.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
