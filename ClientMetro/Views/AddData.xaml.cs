@@ -47,7 +47,7 @@ namespace ClientMetro.Views
                 {
                     if( MessageBoxResult.OK == MessageBox.Show("Операция прошла успешно !", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information) )
                     {
-                        this.Close();
+                        this.Visibility = Visibility.Hidden;
                     }
                 }
             }
@@ -59,6 +59,12 @@ namespace ClientMetro.Views
             {
                 this.IsEnabled = true;
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Visibility = Visibility.Hidden;
         }
     }
 }

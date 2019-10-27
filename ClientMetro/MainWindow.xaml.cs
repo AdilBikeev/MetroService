@@ -111,12 +111,10 @@ namespace ClientMetro
                 if(addData == null)
                 {
                     addData = new AddData();
+                    addData.Show();
                 }
                 this.IsEnabled = false;
-                if( addData.ShowDialog() == true)
-                {
-                    this.IsEnabled = true;
-                }
+                addData.Visibility = Visibility.Visible;
             }
             catch (Exception ex)
             {
