@@ -2,6 +2,23 @@
 <wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://MetroService/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://MetroService/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://MetroService/">
+      <s:element name="UpdateListNotFamiliarDoc">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="secret_key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="docFamiliarLst" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateListNotFamiliarDocResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateListNotFamiliarDocResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="Ping">
         <s:complexType>
           <s:sequence>
@@ -46,9 +63,118 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="AddUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="secret_key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddUserResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddDocuments">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="secret_key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="header" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="content" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddDocumentsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="AddDocumentsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveDocument">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="secret_key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveDocumentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RemoveDocumentResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="secret_key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RemoveUserResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeDataDocument">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="secret_key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="header" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="content" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeDataDocumentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ChangeDataDocumentResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNotFamiliarDocuments">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="secret_key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="login" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNotFamiliarDocumentsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetNotFamiliarDocumentsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="string" nillable="true" type="s:string" />
     </s:schema>
   </wsdl:types>
+  <wsdl:message name="UpdateListNotFamiliarDocSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateListNotFamiliarDoc" />
+  </wsdl:message>
+  <wsdl:message name="UpdateListNotFamiliarDocSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateListNotFamiliarDocResponse" />
+  </wsdl:message>
   <wsdl:message name="PingSoapIn">
     <wsdl:part name="parameters" element="tns:Ping" />
   </wsdl:message>
@@ -66,6 +192,51 @@
   </wsdl:message>
   <wsdl:message name="GetDocumentsSoapOut">
     <wsdl:part name="parameters" element="tns:GetDocumentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddUserSoapIn">
+    <wsdl:part name="parameters" element="tns:AddUser" />
+  </wsdl:message>
+  <wsdl:message name="AddUserSoapOut">
+    <wsdl:part name="parameters" element="tns:AddUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddDocumentsSoapIn">
+    <wsdl:part name="parameters" element="tns:AddDocuments" />
+  </wsdl:message>
+  <wsdl:message name="AddDocumentsSoapOut">
+    <wsdl:part name="parameters" element="tns:AddDocumentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="RemoveDocumentSoapIn">
+    <wsdl:part name="parameters" element="tns:RemoveDocument" />
+  </wsdl:message>
+  <wsdl:message name="RemoveDocumentSoapOut">
+    <wsdl:part name="parameters" element="tns:RemoveDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="RemoveUserSoapIn">
+    <wsdl:part name="parameters" element="tns:RemoveUser" />
+  </wsdl:message>
+  <wsdl:message name="RemoveUserSoapOut">
+    <wsdl:part name="parameters" element="tns:RemoveUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeDataDocumentSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeDataDocument" />
+  </wsdl:message>
+  <wsdl:message name="ChangeDataDocumentSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeDataDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetNotFamiliarDocumentsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetNotFamiliarDocuments" />
+  </wsdl:message>
+  <wsdl:message name="GetNotFamiliarDocumentsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetNotFamiliarDocumentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateListNotFamiliarDocHttpGetIn">
+    <wsdl:part name="secret_key" type="s:string" />
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="docFamiliarLst" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateListNotFamiliarDocHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
   <wsdl:message name="PingHttpGetIn">
     <wsdl:part name="login" type="s:string" />
@@ -85,6 +256,70 @@
     <wsdl:part name="password" type="s:string" />
   </wsdl:message>
   <wsdl:message name="GetDocumentsHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="AddUserHttpGetIn">
+    <wsdl:part name="secret_key" type="s:string" />
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddUserHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="AddDocumentsHttpGetIn">
+    <wsdl:part name="secret_key" type="s:string" />
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="name" type="s:string" />
+    <wsdl:part name="header" type="s:string" />
+    <wsdl:part name="content" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddDocumentsHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="RemoveDocumentHttpGetIn">
+    <wsdl:part name="secret_key" type="s:string" />
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="name" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RemoveDocumentHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="RemoveUserHttpGetIn">
+    <wsdl:part name="secret_key" type="s:string" />
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RemoveUserHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeDataDocumentHttpGetIn">
+    <wsdl:part name="secret_key" type="s:string" />
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="name" type="s:string" />
+    <wsdl:part name="header" type="s:string" />
+    <wsdl:part name="content" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeDataDocumentHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetNotFamiliarDocumentsHttpGetIn">
+    <wsdl:part name="secret_key" type="s:string" />
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetNotFamiliarDocumentsHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateListNotFamiliarDocHttpPostIn">
+    <wsdl:part name="secret_key" type="s:string" />
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="docFamiliarLst" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateListNotFamiliarDocHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
   <wsdl:message name="PingHttpPostIn">
@@ -107,7 +342,67 @@
   <wsdl:message name="GetDocumentsHttpPostOut">
     <wsdl:part name="Body" element="tns:string" />
   </wsdl:message>
+  <wsdl:message name="AddUserHttpPostIn">
+    <wsdl:part name="secret_key" type="s:string" />
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddUserHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="AddDocumentsHttpPostIn">
+    <wsdl:part name="secret_key" type="s:string" />
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="name" type="s:string" />
+    <wsdl:part name="header" type="s:string" />
+    <wsdl:part name="content" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="AddDocumentsHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="RemoveDocumentHttpPostIn">
+    <wsdl:part name="secret_key" type="s:string" />
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="name" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RemoveDocumentHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="RemoveUserHttpPostIn">
+    <wsdl:part name="secret_key" type="s:string" />
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RemoveUserHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeDataDocumentHttpPostIn">
+    <wsdl:part name="secret_key" type="s:string" />
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+    <wsdl:part name="name" type="s:string" />
+    <wsdl:part name="header" type="s:string" />
+    <wsdl:part name="content" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ChangeDataDocumentHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetNotFamiliarDocumentsHttpPostIn">
+    <wsdl:part name="secret_key" type="s:string" />
+    <wsdl:part name="login" type="s:string" />
+    <wsdl:part name="password" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetNotFamiliarDocumentsHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
   <wsdl:portType name="MetroServiceSoap">
+    <wsdl:operation name="UpdateListNotFamiliarDoc">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Обновляет в БД для пользователя список документов, с которыми он ознакомился.</wsdl:documentation>
+      <wsdl:input message="tns:UpdateListNotFamiliarDocSoapIn" />
+      <wsdl:output message="tns:UpdateListNotFamiliarDocSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="Ping">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Проверяет соединение с сервером.</wsdl:documentation>
       <wsdl:input message="tns:PingSoapIn" />
@@ -123,8 +418,43 @@
       <wsdl:input message="tns:GetDocumentsSoapIn" />
       <wsdl:output message="tns:GetDocumentsSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="AddUser">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Добавляет пользователя в БД с указанным login и password</wsdl:documentation>
+      <wsdl:input message="tns:AddUserSoapIn" />
+      <wsdl:output message="tns:AddUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddDocuments">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Добавляет пользователя в БД с указанным названием, заголовком и контентом</wsdl:documentation>
+      <wsdl:input message="tns:AddDocumentsSoapIn" />
+      <wsdl:output message="tns:AddDocumentsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveDocument">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Удаляет документ с указанным названием.</wsdl:documentation>
+      <wsdl:input message="tns:RemoveDocumentSoapIn" />
+      <wsdl:output message="tns:RemoveDocumentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUser">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Предоставляет список документов для пользователя с указанным логином и паролем.</wsdl:documentation>
+      <wsdl:input message="tns:RemoveUserSoapIn" />
+      <wsdl:output message="tns:RemoveUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeDataDocument">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Изменяет данные дкоумента.</wsdl:documentation>
+      <wsdl:input message="tns:ChangeDataDocumentSoapIn" />
+      <wsdl:output message="tns:ChangeDataDocumentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNotFamiliarDocuments">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Предоставляет список документов для пользователя с указанным логином и паролем.</wsdl:documentation>
+      <wsdl:input message="tns:GetNotFamiliarDocumentsSoapIn" />
+      <wsdl:output message="tns:GetNotFamiliarDocumentsSoapOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="MetroServiceHttpGet">
+    <wsdl:operation name="UpdateListNotFamiliarDoc">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Обновляет в БД для пользователя список документов, с которыми он ознакомился.</wsdl:documentation>
+      <wsdl:input message="tns:UpdateListNotFamiliarDocHttpGetIn" />
+      <wsdl:output message="tns:UpdateListNotFamiliarDocHttpGetOut" />
+    </wsdl:operation>
     <wsdl:operation name="Ping">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Проверяет соединение с сервером.</wsdl:documentation>
       <wsdl:input message="tns:PingHttpGetIn" />
@@ -140,8 +470,43 @@
       <wsdl:input message="tns:GetDocumentsHttpGetIn" />
       <wsdl:output message="tns:GetDocumentsHttpGetOut" />
     </wsdl:operation>
+    <wsdl:operation name="AddUser">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Добавляет пользователя в БД с указанным login и password</wsdl:documentation>
+      <wsdl:input message="tns:AddUserHttpGetIn" />
+      <wsdl:output message="tns:AddUserHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddDocuments">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Добавляет пользователя в БД с указанным названием, заголовком и контентом</wsdl:documentation>
+      <wsdl:input message="tns:AddDocumentsHttpGetIn" />
+      <wsdl:output message="tns:AddDocumentsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveDocument">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Удаляет документ с указанным названием.</wsdl:documentation>
+      <wsdl:input message="tns:RemoveDocumentHttpGetIn" />
+      <wsdl:output message="tns:RemoveDocumentHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUser">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Предоставляет список документов для пользователя с указанным логином и паролем.</wsdl:documentation>
+      <wsdl:input message="tns:RemoveUserHttpGetIn" />
+      <wsdl:output message="tns:RemoveUserHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeDataDocument">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Изменяет данные дкоумента.</wsdl:documentation>
+      <wsdl:input message="tns:ChangeDataDocumentHttpGetIn" />
+      <wsdl:output message="tns:ChangeDataDocumentHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNotFamiliarDocuments">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Предоставляет список документов для пользователя с указанным логином и паролем.</wsdl:documentation>
+      <wsdl:input message="tns:GetNotFamiliarDocumentsHttpGetIn" />
+      <wsdl:output message="tns:GetNotFamiliarDocumentsHttpGetOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:portType name="MetroServiceHttpPost">
+    <wsdl:operation name="UpdateListNotFamiliarDoc">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Обновляет в БД для пользователя список документов, с которыми он ознакомился.</wsdl:documentation>
+      <wsdl:input message="tns:UpdateListNotFamiliarDocHttpPostIn" />
+      <wsdl:output message="tns:UpdateListNotFamiliarDocHttpPostOut" />
+    </wsdl:operation>
     <wsdl:operation name="Ping">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Проверяет соединение с сервером.</wsdl:documentation>
       <wsdl:input message="tns:PingHttpPostIn" />
@@ -157,9 +522,48 @@
       <wsdl:input message="tns:GetDocumentsHttpPostIn" />
       <wsdl:output message="tns:GetDocumentsHttpPostOut" />
     </wsdl:operation>
+    <wsdl:operation name="AddUser">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Добавляет пользователя в БД с указанным login и password</wsdl:documentation>
+      <wsdl:input message="tns:AddUserHttpPostIn" />
+      <wsdl:output message="tns:AddUserHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddDocuments">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Добавляет пользователя в БД с указанным названием, заголовком и контентом</wsdl:documentation>
+      <wsdl:input message="tns:AddDocumentsHttpPostIn" />
+      <wsdl:output message="tns:AddDocumentsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveDocument">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Удаляет документ с указанным названием.</wsdl:documentation>
+      <wsdl:input message="tns:RemoveDocumentHttpPostIn" />
+      <wsdl:output message="tns:RemoveDocumentHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUser">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Предоставляет список документов для пользователя с указанным логином и паролем.</wsdl:documentation>
+      <wsdl:input message="tns:RemoveUserHttpPostIn" />
+      <wsdl:output message="tns:RemoveUserHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeDataDocument">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Изменяет данные дкоумента.</wsdl:documentation>
+      <wsdl:input message="tns:ChangeDataDocumentHttpPostIn" />
+      <wsdl:output message="tns:ChangeDataDocumentHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNotFamiliarDocuments">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Предоставляет список документов для пользователя с указанным логином и паролем.</wsdl:documentation>
+      <wsdl:input message="tns:GetNotFamiliarDocumentsHttpPostIn" />
+      <wsdl:output message="tns:GetNotFamiliarDocumentsHttpPostOut" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="MetroServiceSoap" type="tns:MetroServiceSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="UpdateListNotFamiliarDoc">
+      <soap:operation soapAction="http://MetroService/UpdateListNotFamiliarDoc" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="Ping">
       <soap:operation soapAction="http://MetroService/Ping" style="document" />
       <wsdl:input>
@@ -187,9 +591,72 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="AddUser">
+      <soap:operation soapAction="http://MetroService/AddUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddDocuments">
+      <soap:operation soapAction="http://MetroService/AddDocuments" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveDocument">
+      <soap:operation soapAction="http://MetroService/RemoveDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUser">
+      <soap:operation soapAction="http://MetroService/RemoveUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeDataDocument">
+      <soap:operation soapAction="http://MetroService/ChangeDataDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNotFamiliarDocuments">
+      <soap:operation soapAction="http://MetroService/GetNotFamiliarDocuments" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="MetroServiceSoap12" type="tns:MetroServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="UpdateListNotFamiliarDoc">
+      <soap12:operation soapAction="http://MetroService/UpdateListNotFamiliarDoc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="Ping">
       <soap12:operation soapAction="http://MetroService/Ping" style="document" />
       <wsdl:input>
@@ -217,9 +684,72 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="AddUser">
+      <soap12:operation soapAction="http://MetroService/AddUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddDocuments">
+      <soap12:operation soapAction="http://MetroService/AddDocuments" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveDocument">
+      <soap12:operation soapAction="http://MetroService/RemoveDocument" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUser">
+      <soap12:operation soapAction="http://MetroService/RemoveUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeDataDocument">
+      <soap12:operation soapAction="http://MetroService/ChangeDataDocument" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNotFamiliarDocuments">
+      <soap12:operation soapAction="http://MetroService/GetNotFamiliarDocuments" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="MetroServiceHttpGet" type="tns:MetroServiceHttpGet">
     <http:binding verb="GET" />
+    <wsdl:operation name="UpdateListNotFamiliarDoc">
+      <http:operation location="/UpdateListNotFamiliarDoc" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="Ping">
       <http:operation location="/Ping" />
       <wsdl:input>
@@ -240,6 +770,60 @@
     </wsdl:operation>
     <wsdl:operation name="GetDocuments">
       <http:operation location="/GetDocuments" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddUser">
+      <http:operation location="/AddUser" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddDocuments">
+      <http:operation location="/AddDocuments" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveDocument">
+      <http:operation location="/RemoveDocument" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUser">
+      <http:operation location="/RemoveUser" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeDataDocument">
+      <http:operation location="/ChangeDataDocument" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNotFamiliarDocuments">
+      <http:operation location="/GetNotFamiliarDocuments" />
       <wsdl:input>
         <http:urlEncoded />
       </wsdl:input>
@@ -250,6 +834,15 @@
   </wsdl:binding>
   <wsdl:binding name="MetroServiceHttpPost" type="tns:MetroServiceHttpPost">
     <http:binding verb="POST" />
+    <wsdl:operation name="UpdateListNotFamiliarDoc">
+      <http:operation location="/UpdateListNotFamiliarDoc" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="Ping">
       <http:operation location="/Ping" />
       <wsdl:input>
@@ -270,6 +863,60 @@
     </wsdl:operation>
     <wsdl:operation name="GetDocuments">
       <http:operation location="/GetDocuments" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddUser">
+      <http:operation location="/AddUser" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddDocuments">
+      <http:operation location="/AddDocuments" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveDocument">
+      <http:operation location="/RemoveDocument" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUser">
+      <http:operation location="/RemoveUser" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeDataDocument">
+      <http:operation location="/ChangeDataDocument" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNotFamiliarDocuments">
+      <http:operation location="/GetNotFamiliarDocuments" />
       <wsdl:input>
         <mime:content type="application/x-www-form-urlencoded" />
       </wsdl:input>

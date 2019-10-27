@@ -15,6 +15,13 @@ namespace ClientMetro.MetroService {
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://MetroService/", ConfigurationName="MetroService.MetroServiceSoap")]
     public interface MetroServiceSoap {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://MetroService/UpdateListNotFamiliarDoc", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        string UpdateListNotFamiliarDoc(string secret_key, string login, string password, string docFamiliarLst);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://MetroService/UpdateListNotFamiliarDoc", ReplyAction="*")]
+        System.Threading.Tasks.Task<string> UpdateListNotFamiliarDocAsync(string secret_key, string login, string password, string docFamiliarLst);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://MetroService/Ping", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         string Ping(string login, string password);
@@ -35,6 +42,48 @@ namespace ClientMetro.MetroService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://MetroService/GetDocuments", ReplyAction="*")]
         System.Threading.Tasks.Task<string> GetDocumentsAsync(string login, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://MetroService/AddUser", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        string AddUser(string secret_key, string login, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://MetroService/AddUser", ReplyAction="*")]
+        System.Threading.Tasks.Task<string> AddUserAsync(string secret_key, string login, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://MetroService/AddDocuments", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        string AddDocuments(string secret_key, string login, string password, string name, string header, string content);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://MetroService/AddDocuments", ReplyAction="*")]
+        System.Threading.Tasks.Task<string> AddDocumentsAsync(string secret_key, string login, string password, string name, string header, string content);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://MetroService/RemoveDocument", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        string RemoveDocument(string secret_key, string login, string password, string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://MetroService/RemoveDocument", ReplyAction="*")]
+        System.Threading.Tasks.Task<string> RemoveDocumentAsync(string secret_key, string login, string password, string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://MetroService/RemoveUser", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        string RemoveUser(string secret_key, string login, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://MetroService/RemoveUser", ReplyAction="*")]
+        System.Threading.Tasks.Task<string> RemoveUserAsync(string secret_key, string login, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://MetroService/ChangeDataDocument", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        string ChangeDataDocument(string secret_key, string login, string password, string name, string header, string content);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://MetroService/ChangeDataDocument", ReplyAction="*")]
+        System.Threading.Tasks.Task<string> ChangeDataDocumentAsync(string secret_key, string login, string password, string name, string header, string content);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://MetroService/GetNotFamiliarDocuments", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        string GetNotFamiliarDocuments(string secret_key, string login, string password);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://MetroService/GetNotFamiliarDocuments", ReplyAction="*")]
+        System.Threading.Tasks.Task<string> GetNotFamiliarDocumentsAsync(string secret_key, string login, string password);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -64,6 +113,14 @@ namespace ClientMetro.MetroService {
                 base(binding, remoteAddress) {
         }
         
+        public string UpdateListNotFamiliarDoc(string secret_key, string login, string password, string docFamiliarLst) {
+            return base.Channel.UpdateListNotFamiliarDoc(secret_key, login, password, docFamiliarLst);
+        }
+        
+        public System.Threading.Tasks.Task<string> UpdateListNotFamiliarDocAsync(string secret_key, string login, string password, string docFamiliarLst) {
+            return base.Channel.UpdateListNotFamiliarDocAsync(secret_key, login, password, docFamiliarLst);
+        }
+        
         public string Ping(string login, string password) {
             return base.Channel.Ping(login, password);
         }
@@ -86,6 +143,54 @@ namespace ClientMetro.MetroService {
         
         public System.Threading.Tasks.Task<string> GetDocumentsAsync(string login, string password) {
             return base.Channel.GetDocumentsAsync(login, password);
+        }
+        
+        public string AddUser(string secret_key, string login, string password) {
+            return base.Channel.AddUser(secret_key, login, password);
+        }
+        
+        public System.Threading.Tasks.Task<string> AddUserAsync(string secret_key, string login, string password) {
+            return base.Channel.AddUserAsync(secret_key, login, password);
+        }
+        
+        public string AddDocuments(string secret_key, string login, string password, string name, string header, string content) {
+            return base.Channel.AddDocuments(secret_key, login, password, name, header, content);
+        }
+        
+        public System.Threading.Tasks.Task<string> AddDocumentsAsync(string secret_key, string login, string password, string name, string header, string content) {
+            return base.Channel.AddDocumentsAsync(secret_key, login, password, name, header, content);
+        }
+        
+        public string RemoveDocument(string secret_key, string login, string password, string name) {
+            return base.Channel.RemoveDocument(secret_key, login, password, name);
+        }
+        
+        public System.Threading.Tasks.Task<string> RemoveDocumentAsync(string secret_key, string login, string password, string name) {
+            return base.Channel.RemoveDocumentAsync(secret_key, login, password, name);
+        }
+        
+        public string RemoveUser(string secret_key, string login, string password) {
+            return base.Channel.RemoveUser(secret_key, login, password);
+        }
+        
+        public System.Threading.Tasks.Task<string> RemoveUserAsync(string secret_key, string login, string password) {
+            return base.Channel.RemoveUserAsync(secret_key, login, password);
+        }
+        
+        public string ChangeDataDocument(string secret_key, string login, string password, string name, string header, string content) {
+            return base.Channel.ChangeDataDocument(secret_key, login, password, name, header, content);
+        }
+        
+        public System.Threading.Tasks.Task<string> ChangeDataDocumentAsync(string secret_key, string login, string password, string name, string header, string content) {
+            return base.Channel.ChangeDataDocumentAsync(secret_key, login, password, name, header, content);
+        }
+        
+        public string GetNotFamiliarDocuments(string secret_key, string login, string password) {
+            return base.Channel.GetNotFamiliarDocuments(secret_key, login, password);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetNotFamiliarDocumentsAsync(string secret_key, string login, string password) {
+            return base.Channel.GetNotFamiliarDocumentsAsync(secret_key, login, password);
         }
     }
 }
