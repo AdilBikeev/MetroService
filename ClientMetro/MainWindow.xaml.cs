@@ -29,6 +29,7 @@ namespace ClientMetro
     {
         private MainWindowController mainCotr;
         private AddData addData;
+        private ChangeData changeData;
 
         public MainWindow()
         {
@@ -217,13 +218,50 @@ namespace ClientMetro
             switch (selectNameTab)
             {
                 case "Названия документов на ознакомление":
-                    {
-                        this.deleteBtn.Visibility = Visibility.Hidden;
-                        break;
-                    }
+                {
+                    this.deleteBtn.Visibility = Visibility.Hidden;
+                    this.changeBtn.Visibility = Visibility.Hidden;
+                    break;
+                }
+                case "Документы":
+                {
+                    this.changeBtn.Visibility = Visibility.Visible;
+                    break;
+                }
                 default:
                     this.deleteBtn.Visibility = Visibility.Visible;
+                    this.changeBtn.Visibility = Visibility.Hidden;
                     break;
+            }
+        }
+
+        private void ChangeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.IsEnabled = false;
+            try
+            {
+                var itemDel = documentDg.SelectedItem as Document;
+                if (itemDel != null)
+                {
+                    if (this.changeData == null)
+                    {
+                        changeData = new ChangeData(itemDel.NAME);
+                        changeData.Show();
+                    }
+                    else
+                    {
+                        changeData.nameDoc = itemDel.NAME;
+                        changeData.Visibility = Visibility.Visible;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                this.IsEnabled = true;
             }
         }
     }

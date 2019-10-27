@@ -64,6 +64,7 @@
                     <Button x:Name="updateBtn" Click="UpdateBtn_Click">Обновить таблицу из БД</Button>
                     <Button x:Name="addBtn" Click="AddBtn_Click" >Добваить новые данные в БД</Button>
                     <Button x:Name="deleteBtn" Click="deleteDataDg_Click">Удалить данные из БД</Button>
+                    <Button x:Name="changeBtn" Click="ChangeBtn_Click">Изменить данные из БД</Button>
                     <Button x:Name="updateConfigBtn" Click="UpdateConfigBtn_Click" >Обновить файл конфигурации ClientConfig.xml</Button>
                 </StackPanel>
 

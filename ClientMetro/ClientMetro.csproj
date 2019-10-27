@@ -68,12 +68,20 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controller\AddDataController.cs" />
+    <Compile Include="Controller\ChangeDataController.cs" />
     <Compile Include="Models\Config.cs" />
     <Compile Include="Models\NotFamiliarDocuments.cs" />
     <Compile Include="Views\AddData.xaml.cs">
       <DependentUpon>AddData.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ChangeData.xaml.cs">
+      <DependentUpon>ChangeData.xaml</DependentUpon>
+    </Compile>
     <Page Include="Dictionary\addDataDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dictionary\changeDataDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -102,6 +110,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\AddData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ChangeData.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
