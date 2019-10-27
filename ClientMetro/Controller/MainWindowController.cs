@@ -113,5 +113,35 @@ namespace ClientMetro.Controller
             }
             return null;
         }
+    
+        public List<NotFamiliarDocuments> GetNotFamiliarDocuments(out string message, string login, string password)
+        {
+            if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password))
+            {
+                var response = this.Client.GetNotFamiliarDocuments(this.Secret_key, login, password);
+                var json = JObject.Parse(response);
+                if (JsonHelper.GetValue(json, "error") == "0")
+                {
+
+                    var list = DocumentHelper.ParseToList(JsonHelper.GetValue(json, "docNotFamiliarLst"), ',');
+                    var docNotFamiliarLst = new List<NotFamiliarDocuments>();
+                    foreach (var item in list)
+                    {
+                        docNotFamiliarLst.Add(new NotFamiliarDocuments(item));
+                    }
+                    message = string.Empty;
+                    return docNotFamiliarLst;
+                }
+                else
+                {
+                    message = JsonHelper.GetValue(json, "message");
+                }
+            }
+            else
+            {
+                message = "Вы не ввели логин/пароль";
+            }
+            return null;
+        }
     }
 }

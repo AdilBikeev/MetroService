@@ -63,6 +63,12 @@ namespace ClientMetro
                         if (list != null) { documentDg.ItemsSource = list; documentDg.UpdateLayout(); }
                         break;
                     }
+                    case "Названия документов на ознакомление":
+                    {
+                        var list = mainCotr.GetNotFamiliarDocuments(out message, this.loginTb.Text, this.passwordTb.Text);
+                        if (list != null) { documentNotFamiliarDg.ItemsSource = list; documentDg.UpdateLayout(); }
+                        break;
+                    }
                     default:
                         message = string.Empty;
                         break;

@@ -69,6 +69,7 @@
     </ApplicationDefinition>
     <Compile Include="Controller\AddDataController.cs" />
     <Compile Include="Models\Config.cs" />
+    <Compile Include="Models\NotFamiliarDocuments.cs" />
     <Compile Include="Views\AddData.xaml.cs">
       <DependentUpon>AddData.xaml</DependentUpon>
     </Compile>

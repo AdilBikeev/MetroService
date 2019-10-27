@@ -37,6 +37,27 @@
                                 <Button x:Name="checkConnBtn" Click="CheckConnBtn_Click">Проверить подключение к БД</Button>
                             </StackPanel>
                         </TabItem>
+                        <TabItem Header="Названия документов на ознакомление">
+                            <StackPanel>
+                                <DataGrid x:Name="documentNotFamiliarDg" AutoGenerateColumns="False" CanUserReorderColumns="False" RowDetailsVisibilityMode="Visible" IsReadOnly="True">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Название" Binding="{Binding NAME}" IsReadOnly="True"></DataGridTextColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <StackPanel Orientation="Horizontal">
+                                    <GroupBox Header="Логин" Width="200">
+                                        <GroupItem>
+                                            <TextBox x:Name="loginTb"></TextBox>
+                                        </GroupItem>
+                                    </GroupBox>
+                                    <GroupBox Header="Пароль" Width="200">
+                                        <GroupItem>
+                                            <TextBox x:Name="passwordTb"></TextBox>
+                                        </GroupItem>
+                                    </GroupBox>
+                                </StackPanel>
+                            </StackPanel>
+                        </TabItem>
                     </TabControl>
                 </StackPanel>
                 <StackPanel Orientation="Vertical">

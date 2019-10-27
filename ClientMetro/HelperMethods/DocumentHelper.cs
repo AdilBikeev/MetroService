@@ -11,7 +11,7 @@ namespace ClientMetro.HelperMethods
         /// <summary>
         /// Разделитель по умолчанию
         /// </summary>
-        public static char delimiterDefault = ',';
+        private static char delimiterDefault = ',';
 
         /// <summary>
         /// Преобразовывает из элементов строки, разделенными запятой, в List
