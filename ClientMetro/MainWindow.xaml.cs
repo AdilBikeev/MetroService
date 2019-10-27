@@ -171,7 +171,7 @@ namespace ClientMetro
                                 var list = userDg.ItemsSource as List<User>;
                                 list.Remove(itemDel);
                                 userDg.ItemsSource = list;
-                                userDg.UpdateLayout(); 
+                                userDg.Items.Refresh();
                             }
                             break;
                         }
@@ -184,7 +184,7 @@ namespace ClientMetro
                                 var list = documentDg.ItemsSource as List<Document>;
                                 list.Remove(itemDel);
                                 documentDg.ItemsSource = list;
-                                documentDg.UpdateLayout();
+                                documentDg.Items.Refresh();
                             }
                             break;
                         }

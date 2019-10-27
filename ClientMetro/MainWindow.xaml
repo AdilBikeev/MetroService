@@ -27,7 +27,7 @@
                         </TabItem>
                         <TabItem Header="Документы">
                             <StackPanel>
-                                <DataGrid x:Name="documentDg" SelectionMode="Single" AutoGenerateColumns="False" CanUserReorderColumns="False" RowDetailsVisibilityMode="Visible" IsReadOnly="True">
+                                <DataGrid x:Name="documentDg" SelectionMode="Single"  AutoGenerateColumns="False" CanUserReorderColumns="False" RowDetailsVisibilityMode="Visible" IsReadOnly="True">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Заголовок" Binding="{Binding HEADER}" IsReadOnly="True"></DataGridTextColumn>
                                         <DataGridTextColumn Header="Название" Binding="{Binding NAME}" IsReadOnly="True"></DataGridTextColumn>
