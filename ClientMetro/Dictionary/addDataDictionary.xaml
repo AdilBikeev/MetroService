@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style  x:Key="styleLb">
+        <Setter Property="Control.FontSize" Value="40"/>
+    </Style>
+    <Style  x:Key="styleTb">
+        <Setter Property="Control.Height" Value="40"/>
+        <Setter Property="Control.FontSize" Value="30"/>
+        <Setter Property="Control.Foreground" Value="Red"/>
+    </Style>
+
+    <Style  x:Key="styleBtn">
+        <Setter Property="Control.Height" Value="40"/>
+        <Setter Property="Control.Width" Value="400"/>
+        <Setter Property="Control.FontSize" Value="30"/>
+        <Setter Property="Control.Margin" Value="0,300,0,0"/>
+
+        <Setter Property="Control.Cursor" Value="Hand"/>
+    </Style>
+</ResourceDictionary>
