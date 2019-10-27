@@ -56,7 +56,11 @@
                         </TabItem>
                     </TabControl>
                 </StackPanel>
-                <Button x:Name="updateBtn" Click="UpdateBtn_Click">Обновить таблицу из БД</Button>
+                <StackPanel Orientation="Vertical">
+                    <Button x:Name="updateBtn" Click="UpdateBtn_Click">Обновить таблицу из БД</Button>
+                    <Button x:Name="addBtn" Click="AddBtn_Click" >Добваить новые данные в БД</Button>
+                </StackPanel>
+
             </DockPanel>
             <DockPanel></DockPanel>
         </StackPanel>

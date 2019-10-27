@@ -18,6 +18,7 @@ using Newtonsoft.Json.Linq;
 using ClientMetro.HelperMethods;
 using System.Net;
 using ClientMetro.Controller;
+using ClientMetro.Views;
 
 namespace ClientMetro
 {
@@ -27,6 +28,7 @@ namespace ClientMetro
     public partial class MainWindow : Window
     {
         private MainWindowController mainCotr;
+        private AddData addData;
 
         public MainWindow()
         {
@@ -99,6 +101,29 @@ namespace ClientMetro
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void AddBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if(addData == null)
+                {
+                    addData = new AddData();
+                }
+                this.IsEnabled = false;
+                if( addData.ShowDialog() == true)
+                {
+                    this.IsEnabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }finally
+            {
+                this.IsEnabled = true;
             }
         }
     }
