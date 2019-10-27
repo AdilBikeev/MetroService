@@ -53,13 +53,13 @@ namespace ClientMetro
                 {
                     case "Пользователи":
                     {
-                        var list = mainCotr.GetUsers(secretKeyTb.Text, out message);
+                        var list = mainCotr.GetUsers(out message);
                         if(list != null) {  userDg.ItemsSource = list;  userDg.UpdateLayout(); }
                         break;
                     }
                     case "Документы":
                     {
-                        var list = mainCotr.GetDocuments(loginTb.Text, passwordTb.Text, out message);
+                        var list = mainCotr.GetDocuments(out message);
                         if (list != null) { documentDg.ItemsSource = list; documentDg.UpdateLayout(); }
                         break;
                     }
@@ -128,6 +128,19 @@ namespace ClientMetro
             }finally
             {
                 this.IsEnabled = true;
+            }
+        }
+
+        private void UpdateConfigBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                mainCotr.UpdateConfig();
+                MessageBox.Show("Данные успешно обновлены !", "Сообщение", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

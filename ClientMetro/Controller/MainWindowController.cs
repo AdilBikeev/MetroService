@@ -44,13 +44,13 @@ namespace ClientMetro.Controller
         /// <param name="Secret_key">Секретный ключ</param>
         /// <param name="message">Сообщение полученное в качестве ответа от сервиса</param>
         /// <returns>Список пользователей</returns>
-        public HashSet<User> GetUsers(string Secret_key, out string message)
+        public HashSet<User> GetUsers(out string message)
         {
             if(this.Ping(out message))
             {
-                if (!string.IsNullOrEmpty(Secret_key))
+                if (!string.IsNullOrEmpty(this.Secret_key))
                 {
-                    var response = this.Client.GetUsers(Secret_key);
+                    var response = this.Client.GetUsers(this.Secret_key);
                     var json = JObject.Parse(response);
                     if (JsonHelper.GetValue(json, "error") == "0")
                     {
@@ -85,36 +85,32 @@ namespace ClientMetro.Controller
         /// <param name="Password">Пароль</param>
         /// <param name="message">Сообщение полученное в качестве ответа от сервиса</param>
         /// <returns>Список документов</returns>
-        public List<Document> GetDocuments(string Login, string Password, out string message)
+        public List<Document> GetDocuments(out string message)
         {
-            if(this.Ping(out message))
+            if (!string.IsNullOrEmpty(this.Login) && !string.IsNullOrEmpty(this.Password))
             {
-                if (!string.IsNullOrEmpty(Login) && !string.IsNullOrEmpty(Password))
+                var response = this.Client.GetDocuments(this.Login, this.Password);
+                var json = JObject.Parse(response);
+                if (JsonHelper.GetValue(json, "error") == "0")
                 {
-                    var response = this.Client.GetDocuments(Login, Password);
-                    var json = JObject.Parse(response);
-                    if (JsonHelper.GetValue(json, "error") == "0")
+                    var jArray = json.GetValue("documents").Value<JArray>();
+                    var documents = new List<Document>();
+                    foreach (var item in jArray)
                     {
-                        var jArray = json.GetValue("documents").Value<JArray>();
-                        var documents = new List<Document>();
-                        foreach (var item in jArray)
-                        {
-                            documents.Add(new Document(item.ToObject<JObject>()));
-                        }
-                        message = string.Empty;
-                        return documents;
+                        documents.Add(new Document(item.ToObject<JObject>()));
                     }
-                    else
-                    {
-                        message = JsonHelper.GetValue(json, "message");
-                    }
+                    message = string.Empty;
+                    return documents;
                 }
                 else
                 {
-                    message = "Вы не ввели логин/пароль";
+                    message = JsonHelper.GetValue(json, "message");
                 }
             }
-
+            else
+            {
+                message = "Вы не ввели логин/пароль";
+            }
             return null;
         }
     }

@@ -23,11 +23,6 @@
                                         <DataGridTextColumn Header="Пароль" Binding="{Binding PASSWORD}" IsReadOnly="True"></DataGridTextColumn>
                                     </DataGrid.Columns>
                                 </DataGrid>
-                                <GroupBox Header="Секретный ключ">
-                                    <GroupItem>
-                                        <TextBox x:Name="secretKeyTb"></TextBox>
-                                    </GroupItem>
-                                </GroupBox>
                             </StackPanel>
                         </TabItem>
                         <TabItem Header="Документы">
@@ -39,18 +34,6 @@
                                         <DataGridTextColumn Header="Содержание" Binding="{Binding CONTENT}" IsReadOnly="True"></DataGridTextColumn>
                                     </DataGrid.Columns>
                                 </DataGrid>
-                                <StackPanel Orientation="Horizontal">
-                                    <GroupBox Header="Логин" Width="200">
-                                        <GroupItem>
-                                            <TextBox x:Name="loginTb"></TextBox>
-                                        </GroupItem>
-                                    </GroupBox>
-                                    <GroupBox Header="Пароль" Width="200">
-                                        <GroupItem>
-                                            <TextBox x:Name="passwordTb"></TextBox>
-                                        </GroupItem>
-                                    </GroupBox>
-                                </StackPanel>
                                 <Button x:Name="checkConnBtn" Click="CheckConnBtn_Click">Проверить подключение к БД</Button>
                             </StackPanel>
                         </TabItem>
@@ -59,6 +42,7 @@
                 <StackPanel Orientation="Vertical">
                     <Button x:Name="updateBtn" Click="UpdateBtn_Click">Обновить таблицу из БД</Button>
                     <Button x:Name="addBtn" Click="AddBtn_Click" >Добваить новые данные в БД</Button>
+                    <Button x:Name="updateConfigBtn" Click="UpdateConfigBtn_Click" >Обновить файл конфигурации ClientConfig.xml</Button>
                 </StackPanel>
 
             </DockPanel>

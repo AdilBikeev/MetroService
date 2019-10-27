@@ -39,6 +39,14 @@ namespace ClientMetro.Models
         }
 
         /// <summary>
+        /// Обновляет данные с конфиг файла
+        /// </summary>
+        public void UpdateConfig()
+        {
+            initConfi();
+        }
+
+        /// <summary>
         /// Инициализирует клиента для взаимодейсвтия с сервисом
         /// </summary>
         private void Initialize()
