@@ -66,7 +66,7 @@ namespace ClientMetro
                     case "Названия документов на ознакомление":
                     {
                         var list = mainCotr.GetNotFamiliarDocuments(out message, this.loginTb.Text, this.passwordTb.Text);
-                        if (list != null) { documentNotFamiliarDg.ItemsSource = list; documentDg.UpdateLayout(); }
+                        if (list != null) { documentNotFamiliarDg.ItemsSource = list; documentNotFamiliarDg.UpdateLayout(); }
                         break;
                     }
                     default:
@@ -147,6 +147,83 @@ namespace ClientMetro
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void deleteDataDg_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string selectNameTab = string.Empty;
+                TabItem item = (tabControl.SelectedValue as TabItem);
+                selectNameTab = item.Header.ToString();
+
+                string message;
+
+
+                switch (selectNameTab)
+                {
+                    case "Пользователи":
+                        {
+                            var itemDel = userDg.SelectedItem as User;
+                            var result = mainCotr.DeleteUser(out message, itemDel.LOGIN, itemDel.PASSWORD);
+                            if (result) { 
+                                var list = userDg.ItemsSource as List<User>;
+                                list.Remove(itemDel);
+                                userDg.ItemsSource = list;
+                                userDg.UpdateLayout(); 
+                            }
+                            break;
+                        }
+                    case "Документы":
+                        {
+                            var itemDel = documentDg.SelectedItem as Document;
+                            var result = mainCotr.DeleteDocument(out message, itemDel.NAME);
+                            if (result)
+                            {
+                                var list = documentDg.ItemsSource as List<Document>;
+                                list.Remove(itemDel);
+                                documentDg.ItemsSource = list;
+                                documentDg.UpdateLayout();
+                            }
+                            break;
+                        }
+                    default:
+                        message = string.Empty;
+                        break;
+                }
+
+                if (message != string.Empty)
+                {
+                    MessageBox.Show(message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    MessageBox.Show("Операция прошла успешно !", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string selectNameTab = string.Empty;
+            TabItem item = (tabControl.SelectedValue as TabItem);
+            selectNameTab = item.Header.ToString();
+
+            switch (selectNameTab)
+            {
+                case "Названия документов на ознакомление":
+                    {
+                        this.deleteBtn.Visibility = Visibility.Hidden;
+                        break;
+                    }
+                default:
+                    this.deleteBtn.Visibility = Visibility.Visible;
+                    break;
             }
         }
     }

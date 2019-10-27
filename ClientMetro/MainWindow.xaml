@@ -14,10 +14,10 @@
         <StackPanel>
             <DockPanel>
                 <StackPanel Orientation="Horizontal" Width="400">
-                    <TabControl x:Name="tabControl" HorizontalContentAlignment="Stretch" Width="400">
+                    <TabControl x:Name="tabControl" SelectionChanged="TabControl_SelectionChanged" HorizontalContentAlignment="Stretch" Width="400">
                         <TabItem Header="Пользователи">
                             <StackPanel>
-                                <DataGrid x:Name="userDg" AutoGenerateColumns="False" CanUserReorderColumns="False" RowDetailsVisibilityMode="Visible" IsReadOnly="True">
+                                <DataGrid x:Name="userDg" SelectionMode="Single" AutoGenerateColumns="False" CanUserReorderColumns="False" RowDetailsVisibilityMode="Visible" IsReadOnly="True">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Логин" Binding="{Binding LOGIN}" IsReadOnly="True"></DataGridTextColumn>
                                         <DataGridTextColumn Header="Пароль" Binding="{Binding PASSWORD}" IsReadOnly="True"></DataGridTextColumn>
@@ -27,7 +27,7 @@
                         </TabItem>
                         <TabItem Header="Документы">
                             <StackPanel>
-                                <DataGrid x:Name="documentDg" AutoGenerateColumns="False" CanUserReorderColumns="False" RowDetailsVisibilityMode="Visible" IsReadOnly="True">
+                                <DataGrid x:Name="documentDg" SelectionMode="Single" AutoGenerateColumns="False" CanUserReorderColumns="False" RowDetailsVisibilityMode="Visible" IsReadOnly="True">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Заголовок" Binding="{Binding HEADER}" IsReadOnly="True"></DataGridTextColumn>
                                         <DataGridTextColumn Header="Название" Binding="{Binding NAME}" IsReadOnly="True"></DataGridTextColumn>
@@ -39,7 +39,7 @@
                         </TabItem>
                         <TabItem Header="Названия документов на ознакомление">
                             <StackPanel>
-                                <DataGrid x:Name="documentNotFamiliarDg" AutoGenerateColumns="False" CanUserReorderColumns="False" RowDetailsVisibilityMode="Visible" IsReadOnly="True">
+                                <DataGrid x:Name="documentNotFamiliarDg" SelectionMode="Single" AutoGenerateColumns="False" CanUserReorderColumns="False" RowDetailsVisibilityMode="Visible" IsReadOnly="True">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Header="Название" Binding="{Binding NAME}" IsReadOnly="True"></DataGridTextColumn>
                                     </DataGrid.Columns>
@@ -63,6 +63,7 @@
                 <StackPanel Orientation="Vertical">
                     <Button x:Name="updateBtn" Click="UpdateBtn_Click">Обновить таблицу из БД</Button>
                     <Button x:Name="addBtn" Click="AddBtn_Click" >Добваить новые данные в БД</Button>
+                    <Button x:Name="deleteBtn" Click="deleteDataDg_Click">Удалить данные из БД</Button>
                     <Button x:Name="updateConfigBtn" Click="UpdateConfigBtn_Click" >Обновить файл конфигурации ClientConfig.xml</Button>
                 </StackPanel>
 

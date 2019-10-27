@@ -143,5 +143,56 @@ namespace ClientMetro.Controller
             }
             return null;
         }
+
+        /// <summary>
+        /// Удаляет пользователя с указанным login и pasword
+        /// </summary>
+        /// <param name="message">Сообщение полученное в качестве ответа от сервиса</param>
+        /// <param name="login">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <returns>true - если удалось удалить пользователя, false - в ином случаи</returns>
+        public bool DeleteUser(out string message, string login, string password)
+        {
+            if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password))
+            {
+                var response = this.Client.RemoveUser(this.Secret_key, login, password);
+                var json = JObject.Parse(response);
+                message = JsonHelper.GetValue(json, "message");
+                if (JsonHelper.GetValue(json, "error") == "0")
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                message = "Неверно указан логин/пароль";
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Удаляет документ с указанным названием из БД
+        /// </summary>
+        /// <param name="message">Сообщение полученное в качестве ответа от сервиса</param>
+        /// <param name="name">Название документа</param>
+        /// <returns>true - если удалось удалить пользователя, false - в ином случаи</returns>
+        public bool DeleteDocument(out string message, string name)
+        {
+            if (!string.IsNullOrEmpty(this.Login) && !string.IsNullOrEmpty(this.Password))
+            {
+                var response = this.Client.RemoveDocument(this.Secret_key, this.Login, this.Password, name);
+                var json = JObject.Parse(response);
+                message = JsonHelper.GetValue(json, "message");
+                if (JsonHelper.GetValue(json, "error") == "0")
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                message = "Неверно указан логин/пароль";
+            }
+            return false;
+        }
     }
 }
