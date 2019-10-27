@@ -113,7 +113,13 @@ namespace ClientMetro
                     addData = new AddData();
                     addData.Show();
                 }
+
+                string selectNameTab = string.Empty;
+                TabItem item = (tabControl.SelectedValue as TabItem);
+                selectNameTab = item.Header.ToString();
+
                 this.IsEnabled = false;
+                addData.view = selectNameTab;
                 addData.Visibility = Visibility.Visible;
             }
             catch (Exception ex)

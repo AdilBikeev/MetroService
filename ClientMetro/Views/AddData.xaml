@@ -6,17 +6,18 @@
         xmlns:local="clr-namespace:ClientMetro.Views"
         mc:Ignorable="d"
         Title="AddData" Height="450" Width="800"
-        Closing="Window_Closing">
+        Closing="Window_Closing"
+        IsVisibleChanged="Window_IsVisibleChanged">
     <Window.Resources>
         <ResourceDictionary Source="../Dictionary/addDataDictionary.xaml"/>
     </Window.Resources>
     <Grid>
-        <Grid x:Name="userGrid" Width="500" Height="180">
+        <Grid x:Name="userGrid" Width="500" Height="180" Visibility="Hidden">
             <DockPanel>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Vertical" Width="250">
                         <Label Style="{StaticResource ResourceKey=styleLb}">Логина</Label>
-                        <TextBox x:Name="loginTb" Style="{StaticResource ResourceKey=styleTb}">dsadas</TextBox>
+                        <TextBox x:Name="loginTb" Style="{StaticResource ResourceKey=styleTb}"></TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Width="250">
                         <Label Style="{StaticResource ResourceKey=styleLb}">Пароль</Label>
@@ -25,6 +26,27 @@
                 </StackPanel>
             </DockPanel>
         </Grid>
+        <Grid x:Name="documentGrid" Style="{StaticResource ResourceKey=styleDocumentDg}" Visibility="Hidden">
+            <DockPanel>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical" Width="350">
+                            <Label Style="{StaticResource ResourceKey=styleDocumentLb}">Название документа</Label>
+                            <TextBox x:Name="nameTb" Style="{StaticResource ResourceKey=styleTb}"></TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Width="350">
+                            <Label Style="{StaticResource ResourceKey=styleDocumentLb}">Заголовок документа</Label>
+                            <TextBox x:Name="headerTb" Style="{StaticResource ResourceKey=styleTb}"></TextBox>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <Label Style="{StaticResource ResourceKey=styleDocumentLb}">Содержание</Label>
+                        <RichTextBox x:Name="contentRtb" Style="{StaticResource ResourceKey=styleDocumentRtb}"></RichTextBox>
+                    </StackPanel>
+                </StackPanel>
+            </DockPanel>
+        </Grid>
+
         <Button x:Name="addDataBtn" Content="Добавить в БД" Style="{StaticResource ResourceKey=styleBtn}" Click="AddDataBtn_Click"></Button>
     </Grid>
 </Window>

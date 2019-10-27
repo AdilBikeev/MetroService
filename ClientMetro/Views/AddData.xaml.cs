@@ -23,21 +23,45 @@ namespace ClientMetro.Views
     {
         private AddDataController dataController;
 
+        public string view;
+
         public AddData()
         {
             InitializeComponent();
             dataController = new AddDataController();
+            view = "Пользователи";
         }
 
         private void AddDataBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.IsEnabled = false; 
+            this.IsEnabled = false;
             MessageBox.Show("Пожалуйста подождите, операция выполняется", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information);
             try
             {
                 string message;
 
-                dataController.addUser(out message, this.loginTb.Text, this.passwordTb.Password);
+                switch (this.view)
+                {
+                    case "Пользователи":
+                        {
+                            this.documentGrid.Visibility = Visibility.Hidden;
+                            this.userGrid.Visibility = Visibility.Visible;
+                            dataController.addUser(out message, this.loginTb.Text, this.passwordTb.Password);
+                            break;
+                        }
+                    case "Документы":
+                        {
+                            this.documentGrid.Visibility = Visibility.Visible;
+                            this.userGrid.Visibility = Visibility.Hidden;
+                            var content = new TextRange(this.contentRtb.Document.ContentStart, this.contentRtb.Document.ContentEnd);
+                            dataController.addDocument(out message, this.nameTb.Text, this.headerTb.Text, content.Text);
+                            break;
+                        }
+                    default:
+                        message = string.Empty;
+                        break;
+                }
+
 
                 if (message != string.Empty)
                 {
@@ -45,7 +69,7 @@ namespace ClientMetro.Views
                 }
                 else
                 {
-                    if( MessageBoxResult.OK == MessageBox.Show("Операция прошла успешно !", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information) )
+                    if (MessageBoxResult.OK == MessageBox.Show("Операция прошла успешно !", "Уведомление", MessageBoxButton.OK, MessageBoxImage.Information))
                     {
                         this.Visibility = Visibility.Hidden;
                     }
@@ -65,6 +89,26 @@ namespace ClientMetro.Views
         {
             e.Cancel = true;
             this.Visibility = Visibility.Hidden;
+        }
+        private void Window_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            switch (this.view)
+            {
+                case "Пользователи":
+                    {
+                        this.documentGrid.Visibility = Visibility.Hidden;
+                        this.userGrid.Visibility = Visibility.Visible;
+                        break;
+                    }
+                case "Документы":
+                    {
+                        this.documentGrid.Visibility = Visibility.Visible;
+                        this.userGrid.Visibility = Visibility.Hidden;
+                        break;
+                    }
+                default:
+                    break;
+            }
         }
     }
 }
