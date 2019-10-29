@@ -16,7 +16,7 @@
             <DockPanel>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Vertical" Width="250">
-                        <Label Style="{StaticResource ResourceKey=styleLb}">Логина</Label>
+                        <Label Style="{StaticResource ResourceKey=styleLb}">Логин</Label>
                         <TextBox x:Name="loginTb" Style="{StaticResource ResourceKey=styleTb}"></TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Width="250">
