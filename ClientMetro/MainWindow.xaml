@@ -14,7 +14,7 @@
         <StackPanel>
             <DockPanel>
                 <StackPanel Orientation="Horizontal" Width="400">
-                    <TabControl x:Name="tabControl" SelectionChanged="TabControl_SelectionChanged" HorizontalContentAlignment="Stretch" Width="400">
+                    <TabControl x:Name="tabControl"  SelectionChanged="TabControl_SelectionChanged" HorizontalContentAlignment="Stretch" Width="400">
                         <TabItem Header="Пользователи">
                             <StackPanel>
                                 <DataGrid x:Name="userDg" SelectionMode="Single" AutoGenerateColumns="False" CanUserReorderColumns="False" RowDetailsVisibilityMode="Visible" IsReadOnly="True">
@@ -63,7 +63,7 @@
                 <StackPanel Orientation="Vertical">
                     <Button x:Name="updateBtn" Click="UpdateBtn_Click">Обновить таблицу из БД</Button>
                     <Button x:Name="addBtn" Click="AddBtn_Click" >Добавить новые данные в БД</Button>
-                    <Button x:Name="deleteBtn" Click="deleteDataDg_Click">Удалить данные из БД</Button>
+                    <Button x:Name="deleteBtn" Click="deleteDataDg_Click" Visibility="Hidden">Удалить данные из БД</Button>
                     <Button x:Name="changeBtn" Click="ChangeBtn_Click">Изменить данные из БД</Button>
                     <Button x:Name="updateConfigBtn" Click="UpdateConfigBtn_Click" >Обновить файл конфигурации ClientConfig.xml</Button>
                 </StackPanel>

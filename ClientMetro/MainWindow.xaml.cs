@@ -55,19 +55,40 @@ namespace ClientMetro
                     case "Пользователи":
                     {
                         var list = mainCotr.GetUsers(out message);
-                        if(list != null) {  userDg.ItemsSource = list;  userDg.UpdateLayout(); }
+                        if(list != null) {  
+                                userDg.ItemsSource = list;  
+                                userDg.UpdateLayout();
+                                this.deleteBtn.Visibility = Visibility.Visible;
+                        }else
+                        {
+                                this.deleteBtn.Visibility = Visibility.Hidden;
+                        }
                         break;
                     }
                     case "Документы":
                     {
                         var list = mainCotr.GetDocuments(out message);
-                        if (list != null) { documentDg.ItemsSource = list; documentDg.UpdateLayout(); }
+                        if (list != null) {
+                                documentDg.ItemsSource = list; 
+                                documentDg.UpdateLayout();
+                                this.deleteBtn.Visibility = Visibility.Visible;
+                        }else
+                        {
+                                this.deleteBtn.Visibility = Visibility.Hidden;
+                        }
                         break;
                     }
                     case "Названия документов на ознакомление":
                     {
                         var list = mainCotr.GetNotFamiliarDocuments(out message, this.loginTb.Text, this.passwordTb.Text);
-                        if (list != null) { documentNotFamiliarDg.ItemsSource = list; documentNotFamiliarDg.UpdateLayout(); }
+                        if (list != null) {
+                                documentNotFamiliarDg.ItemsSource = list; 
+                                documentNotFamiliarDg.UpdateLayout();
+                                this.deleteBtn.Visibility = Visibility.Visible;
+                        }else
+                        {
+                                this.deleteBtn.Visibility = Visibility.Hidden;
+                        }
                         break;
                     }
                     default:
@@ -219,18 +240,32 @@ namespace ClientMetro
             {
                 case "Названия документов на ознакомление":
                 {
-                    this.deleteBtn.Visibility = Visibility.Hidden;
                     this.changeBtn.Visibility = Visibility.Hidden;
+                    this.deleteBtn.Visibility = Visibility.Hidden;
                     break;
                 }
                 case "Документы":
                 {
                     this.changeBtn.Visibility = Visibility.Visible;
+                    if (this.documentDg.ItemsSource == null)
+                    {
+                        this.deleteBtn.Visibility = Visibility.Hidden;
+                        this.changeBtn.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        this.deleteBtn.Visibility = Visibility.Visible;
+                        this.changeBtn.Visibility = Visibility.Visible;
+                    }
                     break;
                 }
                 default:
-                    this.deleteBtn.Visibility = Visibility.Visible;
                     this.changeBtn.Visibility = Visibility.Hidden;
+                    this.changeBtn.Visibility = Visibility.Hidden;
+                    if (this.userDg.ItemsSource == null)
+                        this.deleteBtn.Visibility = Visibility.Hidden;
+                    else
+                        this.deleteBtn.Visibility = Visibility.Visible;
                     break;
             }
         }
@@ -253,6 +288,9 @@ namespace ClientMetro
                         changeData.nameDoc = itemDel.NAME;
                         changeData.Visibility = Visibility.Visible;
                     }
+                } else
+                {
+                    MessageBox.Show("Для начала выберите документ, который хотите изменить", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
