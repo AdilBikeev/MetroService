@@ -18,16 +18,20 @@ namespace ClientMetro.Controller
 
         public bool addUser(out string message, string login, string password)
         {
+            message = string.Empty;
             if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password))
             {
                 this.UpdateConfig();
 
                 var response = this.Client.AddUser(this.Secret_key, login, password);
                 var json = JObject.Parse(response);
-                message = JsonHelper.GetValue(json, "message");
                 if (JsonHelper.GetValue(json, "error") == "0")
                 {
                     return true;
+                } else
+                {
+                    message = JsonHelper.GetValue(json, "message");
+                    return false;
                 }
             }
             else
@@ -43,12 +47,17 @@ namespace ClientMetro.Controller
 
             if (!string.IsNullOrEmpty(this.Login) && !string.IsNullOrEmpty(this.Password) && !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(header) && !string.IsNullOrEmpty(content))
             {
+                message = string.Empty;
                 var response = this.Client.AddDocuments(this.Secret_key, this.Login, this.Password, name, header, content);
                 var json = JObject.Parse(response);
-                message = JsonHelper.GetValue(json, "message");
                 if (JsonHelper.GetValue(json, "error") == "0")
                 {
                     return true;
+                }
+                else
+                {
+                    message = JsonHelper.GetValue(json, "message");
+                    return false;
                 }
             }
             else
