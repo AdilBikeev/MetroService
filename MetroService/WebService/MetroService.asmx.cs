@@ -507,12 +507,18 @@ namespace MetroService.WebService
                 }
                 else
                 {
+                    MetroDbEntities1.NotFamiliarDocuments.Load();
                     MetroDbEntities1.User.Load();
 
+                    var lstDocuments = MetroDbEntities1.NotFamiliarDocuments.Local;
                     var lstUsers = MetroDbEntities1.User.Local;
+
+                    var docDel = lstDocuments.FirstOrDefault(x => x.user_Login == login);
                     var userDel = lstUsers.FirstOrDefault(x => x.login == login && x.password == password);
-                    if (userDel != null)
+
+                    if (userDel != null && docDel != null)
                     {
+                        MetroDbEntities1.NotFamiliarDocuments.Remove(docDel);
                         MetroDbEntities1.User.Remove(userDel);
                         MetroDbEntities1.SaveChanges();
                     }
