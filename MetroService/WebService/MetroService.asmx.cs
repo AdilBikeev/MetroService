@@ -197,7 +197,7 @@ namespace MetroService.WebService
                     if (login != "1234admin1234metro1234service" || password != "43211234")
                     {
                         response["error"] = "5";
-                        response["message"] = "Неверно указан логин или пароль логин/пароль";
+                        response["message"] = "Неверно указан логин/пароль";
                     }
                 }
             }

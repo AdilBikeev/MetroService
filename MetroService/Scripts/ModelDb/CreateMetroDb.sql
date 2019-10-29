@@ -1,57 +1,24 @@
-﻿
--- --------------------------------------------------
--- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
--- --------------------------------------------------
--- Date Created: 09/17/2019 23:33:32
--- Generated from EDMX file: C:\Users\Адиль\Desktop\Обучение в МИРЭА\3 курс\5 семестр\СиП\MetroService\Models\MetroDbModel.edmx
--- --------------------------------------------------
-
-SET QUOTED_IDENTIFIER OFF;
-GO
-USE [MetroDb];
-GO
-IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
-GO
-
--- --------------------------------------------------
--- Dropping existing FOREIGN KEY constraints
--- --------------------------------------------------
-
-
--- --------------------------------------------------
--- Dropping existing tables
--- --------------------------------------------------
-
-IF OBJECT_ID(N'[dbo].[User]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[User];
-GO
-
--- --------------------------------------------------
--- Creating all tables
--- --------------------------------------------------
-
--- Creating table 'User'
-CREATE TABLE [dbo].[User] (
-    [Id] int  NOT NULL,
-    [login] nvarchar(50)  NOT NULL,
-    [password] nvarchar(50)  NOT NULL
+﻿CREATE TABLE [dbo].[User] (
+    [login]    NVARCHAR (50) NOT NULL,
+    [password] NVARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([login] ASC)
 );
+
+GO 
+
+CREATE TABLE [dbo].[Document] (
+    [Name]    NVARCHAR (50) NOT NULL,
+    [header]  NVARCHAR (50) NOT NULL,
+    [content] NVARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Name] ASC)
+);
+
 GO
 
--- --------------------------------------------------
--- Creating all PRIMARY KEY constraints
--- --------------------------------------------------
+CREATE TABLE [dbo].[NotFamiliarDocuments] (
+    [user_Login]          NVARCHAR (50) NOT NULL,
+    [names_DocumentsList] NVARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([user_Login] ASC),
+    FOREIGN KEY ([user_Login]) REFERENCES [dbo].[User] ([login])
+);
 
--- Creating primary key on [Id] in table 'User'
-ALTER TABLE [dbo].[User]
-ADD CONSTRAINT [PK_User]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
-
--- --------------------------------------------------
--- Creating all FOREIGN KEY constraints
--- --------------------------------------------------
-
--- --------------------------------------------------
--- Script has ended
--- --------------------------------------------------
