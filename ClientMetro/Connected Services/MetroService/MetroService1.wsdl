@@ -927,16 +927,16 @@
   </wsdl:binding>
   <wsdl:service name="MetroService">
     <wsdl:port name="MetroServiceSoap" binding="tns:MetroServiceSoap">
-      <soap:address location="http://metro.somee.com/WebService/MetroService.asmx" />
+      <soap:address location="http://metroservice.somee.com/WebService/MetroService.asmx" />
     </wsdl:port>
     <wsdl:port name="MetroServiceSoap12" binding="tns:MetroServiceSoap12">
-      <soap12:address location="http://metro.somee.com/WebService/MetroService.asmx" />
+      <soap12:address location="http://metroservice.somee.com/WebService/MetroService.asmx" />
     </wsdl:port>
     <wsdl:port name="MetroServiceHttpGet" binding="tns:MetroServiceHttpGet">
-      <http:address location="http://metro.somee.com/WebService/MetroService.asmx" />
+      <http:address location="http://metroservice.somee.com/WebService/MetroService.asmx" />
     </wsdl:port>
     <wsdl:port name="MetroServiceHttpPost" binding="tns:MetroServiceHttpPost">
-      <http:address location="http://metro.somee.com/WebService/MetroService.asmx" />
+      <http:address location="http://metroservice.somee.com/WebService/MetroService.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="3jLobLMDXT+Sd8fkn8fiPnopaQE=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="4jqdO/wDPt+L2KqWTpyclw3fo0A=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="MetroServiceSoap">
       <properties>
@@ -263,10 +263,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="MetroServiceSoap" contract="MetroService.MetroServiceSoap" bindingType="basicHttpBinding" address="http://metro.somee.com/WebService/MetroService.asmx" bindingConfiguration="MetroServiceSoap">
+    <endpoint name="MetroServiceSoap" contract="MetroService.MetroServiceSoap" bindingType="basicHttpBinding" address="http://metroservice.somee.com/WebService/MetroService.asmx" bindingConfiguration="MetroServiceSoap">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://metro.somee.com/WebService/MetroService.asmx</serializedValue>
+          <serializedValue>http://metroservice.somee.com/WebService/MetroService.asmx</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -348,10 +348,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="MetroServiceSoap12" contract="MetroService.MetroServiceSoap" bindingType="customBinding" address="http://metro.somee.com/WebService/MetroService.asmx" bindingConfiguration="MetroServiceSoap12">
+    <endpoint name="MetroServiceSoap12" contract="MetroService.MetroServiceSoap" bindingType="customBinding" address="http://metroservice.somee.com/WebService/MetroService.asmx" bindingConfiguration="MetroServiceSoap12">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://metro.somee.com/WebService/MetroService.asmx</serializedValue>
+          <serializedValue>http://metroservice.somee.com/WebService/MetroService.asmx</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
