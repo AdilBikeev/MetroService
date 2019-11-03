@@ -23,13 +23,35 @@ namespace ClientMetro.Views
     {
         private AddDataController dataController;
 
-        public string view;
+        private string view;
+
+        public void SetView(string view)
+        {
+            switch (view)
+            {
+                case "Пользователи":
+                    {
+                        this.documentGrid.Visibility = Visibility.Hidden;
+                        this.userGrid.Visibility = Visibility.Visible;
+                        break;
+                    }
+                case "Документы":
+                    {
+                        this.documentGrid.Visibility = Visibility.Visible;
+                        this.userGrid.Visibility = Visibility.Hidden;
+                        break;
+                    }
+                default:
+                    break;
+            }
+
+            this.view = view;
+        }
 
         public AddData()
         {
             InitializeComponent();
             dataController = new AddDataController();
-            view = "Пользователи";
         }
 
         private void AddDataBtn_Click(object sender, RoutedEventArgs e)

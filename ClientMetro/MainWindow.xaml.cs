@@ -147,7 +147,7 @@ namespace ClientMetro
                 selectNameTab = item.Header.ToString();
 
                 this.IsEnabled = false;
-                addData.view = selectNameTab;
+                addData.SetView(selectNameTab);
                 addData.Visibility = Visibility.Visible;
             }
             catch (Exception ex)
@@ -242,11 +242,13 @@ namespace ClientMetro
                 {
                     this.changeBtn.Visibility = Visibility.Hidden;
                     this.deleteBtn.Visibility = Visibility.Hidden;
+                    this.addBtn.Visibility = Visibility.Hidden;
                     break;
                 }
                 case "Документы":
                 {
                     this.changeBtn.Visibility = Visibility.Visible;
+                    this.addBtn.Visibility = Visibility.Visible;
                     if (this.documentDg.ItemsSource == null)
                     {
                         this.deleteBtn.Visibility = Visibility.Hidden;
@@ -261,7 +263,7 @@ namespace ClientMetro
                 }
                 default:
                     this.changeBtn.Visibility = Visibility.Hidden;
-                    this.changeBtn.Visibility = Visibility.Hidden;
+                    this.addBtn.Visibility = Visibility.Visible;
                     if (this.userDg.ItemsSource == null)
                         this.deleteBtn.Visibility = Visibility.Hidden;
                     else
