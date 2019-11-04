@@ -319,9 +319,12 @@ namespace MetroService.WebService
         /// <param name="secret_key">Секретный ключ</param>
         /// <param name="login">Логин</param>
         /// <param name="password">Пароль</param>
+        /// <param name="name">Имя</param>
+        /// <param name="surname">Фамилия</param>
+        /// <param name="lastname">Отчество</param>
         /// <returns>JSON объект с результатом выполнения операции</returns>
-        [WebMethod(Description = "Добавляет пользователя в БД с указанным login и password")]
-        public string AddUser(string secret_key, string login, string password)
+        [WebMethod(Description = "Добавляет пользователя в БД с указанным login, password и личными данными")]
+        public string AddUser(string secret_key, string login, string password, string name, string surname, string lastname)
         {
             JObject response = this.getObjResponse();
 
@@ -332,26 +335,31 @@ namespace MetroService.WebService
                     response["error"] = "1";
                     response["message"] = "Вы не указали логин/пароль";
                 }
+                else if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(surname))
+                {
+                    response["error"] = "12";
+                    response["message"] = "Вы не указали имя/фамилию";
+                }
+                else if (!isLoginExist(login))
+                {
+                    MetroDbEntities1.User.Add(new User
+                    {
+                        login = login,
+                        password = password,
+                        name = name,
+                        surname = surname,
+                        lastname = string.IsNullOrEmpty(lastname) ? string.Empty : lastname
+                    });
+
+                    MetroDbEntities1.SaveChanges();
+                    response["message"] = "Пользователь успешно добавлен в БД";
+                    var result = UpdateListNotFamiliarDoc(secret_key, login, password, string.Empty);
+                    response.Add("inner_message", JObject.Parse(result));
+                }
                 else
                 {
-                    if (!isLoginExist(login))
-                    {
-                        MetroDbEntities1.User.Add(new User
-                        {
-                            login = login,
-                            password = password
-                        });
-
-                        MetroDbEntities1.SaveChanges();
-                        response["message"] = "Пользователь успешно добавлен в БД";
-                        var result = UpdateListNotFamiliarDoc(secret_key, login, password, string.Empty);
-                        response.Add("inner_message", JObject.Parse(result));
-                    }
-                    else
-                    {
-                        response["error"] = "5";
-                        response["message"] = "Пользователь с указанным логином уже существует";
-                    }
+                    response["error"] = "5";
+                    response["message"] = "Пользователь с указанным логином уже существует";
                 }
             }
             catch (Exception ex)
