@@ -260,6 +260,62 @@ namespace MetroService.WebService
             return response.ToString();
         }
 
+        /// <summary>
+        /// Возвращает ФИО пользователя с указанным login и password.
+        /// </summary>
+        /// <param name="login">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <returns>JSON объект с данными ФИО пользователя</returns>
+        [WebMethod(Description = "Возвращает ФИО пользователя с указанным login и password.")]
+        public string GetDataUser(string login, string password)
+        {
+            JObject response = this.getObjResponse();
+
+            if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password))
+            {
+                try
+                {
+                    MetroDbEntities1.User.Load();
+
+                    var lstUsers = MetroDbEntities1.User.Local;
+                    if (lstUsers.Count > 0)
+                    {
+                        var dataUser = lstUsers.FirstOrDefault(x => x.login == login);
+                        if(dataUser != null)
+                        {
+                            JObject user = new JObject();
+                            user.Add("name", dataUser.name);
+                            user.Add("surname", dataUser.surname);
+                            user.Add("lastname", dataUser.lastname);
+                            response.Add("fio", user);
+                        }else
+                        {
+                            response["error"] = "55";
+                            response["message"] = "Вы указали неверный логин/пароль";
+                        }
+                    }
+                    else
+                    {
+                        response["error"] = "505";
+                        response["message"] = "На сервисе нет зарегестрированных пользователей";
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    response["error"] = "30";
+                    response["message"] = ex.Message;
+                }
+            }
+            else
+            {
+                response["error"] = "1";
+                response["message"] = "Отказано в доступе";
+            }
+
+            return response.ToString();
+        }
+
         [WebMethod(Description = "Предоставляет список документов для пользователя с указанным логином и паролем.")]
         public string GetDocuments(string login, string password)
         {
