@@ -1,17 +1,25 @@
 ﻿CREATE TABLE [dbo].[User] (
     [login]    NVARCHAR (50) NOT NULL,
     [password] NVARCHAR (50) NOT NULL,
+    [name]     NVARCHAR (50) NOT NULL,
+    [surname]  NVARCHAR (50) NOT NULL,
+    [lastname] NVARCHAR (50) DEFAULT ('') NULL,
     PRIMARY KEY CLUSTERED ([login] ASC)
 );
+
 
 GO 
 
 CREATE TABLE [dbo].[Document] (
-    [Name]    NVARCHAR (50) NOT NULL,
-    [header]  NVARCHAR (50) NOT NULL,
-    [content] NVARCHAR (50) NOT NULL,
+    [Name]         NVARCHAR (50) NOT NULL,
+    [header]       NVARCHAR (50) NOT NULL,
+    [content]      NVARCHAR (50) NOT NULL,
+    [dateGive]     DATE          NOT NULL,
+    [dateDeadLine] DATE          NOT NULL,
     PRIMARY KEY CLUSTERED ([Name] ASC)
 );
+
+
 
 GO
 
