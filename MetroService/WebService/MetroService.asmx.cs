@@ -316,6 +316,12 @@ namespace MetroService.WebService
             return response.ToString();
         }
 
+        /// <summary>
+        /// Предоставляет список документов для пользователя с указанным логином и паролем.
+        /// </summary>
+        /// <param name="login">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <returns>JSON объект со списком всех документов в БД</returns>
         [WebMethod(Description = "Предоставляет список документов для пользователя с указанным логином и паролем.")]
         public string GetDocuments(string login, string password)
         {
@@ -344,6 +350,8 @@ namespace MetroService.WebService
                                 document.Add("header", doc.header);
                                 document.Add("Name", doc.Name);
                                 document.Add("content", doc.content);
+                                document.Add("dateGive", doc.dateGive);
+                                document.Add("dateDeadLine", doc.dateDeadLine);
 
                                 documents.Add(document);
                             }
