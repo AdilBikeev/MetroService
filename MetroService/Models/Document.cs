@@ -17,5 +17,7 @@ namespace MetroService.Models
         public string Name { get; set; }
         public string header { get; set; }
         public string content { get; set; }
+        public System.DateTime dateGive { get; set; }
+        public System.DateTime dateDeadLine { get; set; }
     }
 }

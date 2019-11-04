@@ -12,6 +12,8 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="header" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="content" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="dateGive" Type="date" Nullable="false" />
+          <Property Name="dateDeadLine" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="NotFamiliarDocuments">
           <Key>
@@ -26,6 +28,9 @@
           </Key>
           <Property Name="login" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastname" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK__NotFamili__user___5CD6CB2B">
           <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -60,6 +65,8 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="header" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="content" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dateGive" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="dateDeadLine" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
         <EntityType Name="NotFamiliarDocuments">
           <Key>
@@ -75,6 +82,9 @@
           </Key>
           <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="NotFamiliarDocuments" Relationship="Self.FK__NotFamili__user___5CD6CB2B" FromRole="User" ToRole="NotFamiliarDocuments" />
         </EntityType>
         <Association Name="FK__NotFamili__user___5CD6CB2B">
@@ -110,6 +120,8 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="header" ColumnName="header" />
                 <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="dateGive" ColumnName="dateGive" />
+                <ScalarProperty Name="dateDeadLine" ColumnName="dateDeadLine" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -126,6 +138,9 @@
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="login" ColumnName="login" />
                 <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
