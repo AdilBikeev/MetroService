@@ -435,9 +435,10 @@ namespace MetroService.WebService
         /// <param name="name">Название документа</param>
         /// <param name="header">Заголовок документа</param>
         /// <param name="content">Содержимое документа</param>
+        /// <param name="dateDeadLine">Дата окончания срока для ознакомления с документов в формате ДД.ММ.ГГГГ</param>
         /// <returns>JSON объект с результатом выполнения операции</returns>
         [WebMethod(Description = "Добавляет пользователя в БД с указанным названием, заголовком и контентом")]
-        public string AddDocuments(string secret_key, string login, string password, string name, string header, string content)
+        public string AddDocuments(string secret_key, string login, string password, string name, string header, string content, string dateDeadLine)
         {
             JObject response = this.getObjResponse();
 
@@ -454,28 +455,39 @@ namespace MetroService.WebService
                     {
                         if(!isDocumentExist(name))
                         {
-                            MetroDbEntities1.Document.Add(new Document
+                            if (string.IsNullOrEmpty(dateDeadLine))
                             {
-                                Name = name,
-                                content = content,
-                                header = header
-                            });
-                            MetroDbEntities1.SaveChanges();
-                            response["message"] = "Документ успешно добавлен в БД";
-
-                            try
-                            {
-                                MetroDbEntities1.NotFamiliarDocuments.Load();
-                                var size = MetroDbEntities1.NotFamiliarDocuments.Local.Count;
-                                for (int i = 0; i < size; i++)
-                                {
-                                    MetroDbEntities1.NotFamiliarDocuments.Local[i].names_DocumentsList += $",{name}";
-                                }
-                                MetroDbEntities1.SaveChanges();
+                                response["error"] = "44";
+                                response["message"] = "Поля dateDeadLine - обязательны для заполнения";
                             }
-                            catch (Exception exc)
+                            else
                             {
-                                response.Add("inner_message", exc.Message);
+                                var dateDeadLineMass = dateDeadLine.Split('.');
+                                MetroDbEntities1.Document.Add(new Document
+                                {
+                                    Name = name,
+                                    content = content,
+                                    header = header,
+                                    dateGive = DateTime.Now,
+                                    dateDeadLine = new DateTime(int.Parse(dateDeadLineMass[2]), int.Parse(dateDeadLineMass[1]), int.Parse(dateDeadLineMass[0]))
+                                });
+                                MetroDbEntities1.SaveChanges();
+                                response["message"] = "Документ успешно добавлен в БД";
+
+                                try
+                                {
+                                    MetroDbEntities1.NotFamiliarDocuments.Load();
+                                    var size = MetroDbEntities1.NotFamiliarDocuments.Local.Count;
+                                    for (int i = 0; i < size; i++)
+                                    {
+                                        MetroDbEntities1.NotFamiliarDocuments.Local[i].names_DocumentsList += $",{name}";
+                                    }
+                                    MetroDbEntities1.SaveChanges();
+                                }
+                                catch (Exception exc)
+                                {
+                                    response.Add("inner_message", exc.Message);
+                                }
                             }
                         }
                         else
