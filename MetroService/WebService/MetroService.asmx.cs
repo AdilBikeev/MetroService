@@ -493,7 +493,7 @@ namespace MetroService.WebService
         /// <param name="login">Логин</param>
         /// <param name="password">Пароль</param>
         /// <returns>JSON объект с результатом операции</returns>
-        [WebMethod(Description = "Предоставляет список документов для пользователя с указанным логином и паролем.")]
+        [WebMethod(Description = "Удаляет пользователя из БД с указанным логином и паролем.")]
         public string RemoveUser(string secret_key, string login, string password)
         {
             JObject response = this.getObjResponse();
@@ -592,7 +592,7 @@ namespace MetroService.WebService
             return response.ToString();
         }
 
-        [WebMethod(Description = "Предоставляет список документов для пользователя с указанным логином и паролем.")]
+        [WebMethod(Description = "Предоставляет список документов, с которыми не ознакомился пользователь с указанным логином и паролем.")]
         public string GetNotFamiliarDocuments(string secret_key, string login, string password)
         {
             JObject response = this.getObjResponse();
