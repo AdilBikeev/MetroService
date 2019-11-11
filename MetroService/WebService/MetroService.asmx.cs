@@ -352,6 +352,7 @@ namespace MetroService.WebService
                                 document.Add("content", doc.content);
                                 document.Add("dateGive", doc.dateGive);
                                 document.Add("dateDeadLine", doc.dateDeadLine);
+                                document.Add("finishDeadLine", DateTime.Now > doc.dateDeadLine ? "1" : "0");
 
                                 documents.Add(document);
                             }
