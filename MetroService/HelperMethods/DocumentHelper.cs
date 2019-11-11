@@ -33,10 +33,14 @@ namespace MetroService.HelperMethods
         /// <returns></returns>
         public static string ParceFamiliarDocument(List<Document> docLst, string[] docNotFamLst)
         {
-            foreach (var item in docNotFamLst)
+            if(docNotFamLst != null)
             {
-                var doc = docLst.First(x => x.Name == item);
-                docLst.Remove(doc);
+                foreach (var item in docNotFamLst)
+                {
+                    var doc = docLst.FirstOrDefault(x => x.Name == item);
+                    if(doc != null)
+                        docLst.Remove(doc);
+                }
             }
 
 

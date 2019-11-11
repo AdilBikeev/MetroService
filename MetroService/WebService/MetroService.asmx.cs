@@ -549,6 +549,7 @@ namespace MetroService.WebService
                             var doc = MetroDbEntities1.Document.First(x => x.Name == name);
                             MetroDbEntities1.Document.Remove(doc);
                             MetroDbEntities1.SaveChanges();
+                            this.UpdateListNotFamiliarDoc(secret_key, login, password, this.GetFamiliarDocuments(secret_key, login, password));
                         }
                         else
                         {
@@ -696,8 +697,20 @@ namespace MetroService.WebService
                         MetroDbEntities1.NotFamiliarDocuments.Load();
                         var lstDocuments = MetroDbEntities1.NotFamiliarDocuments.Local;
                         var user = lstDocuments.FirstOrDefault(x => x.user_Login == login);
-                        var docNotFamiliarLst = new JObject();
-                        response.Add("docNotFamiliarLst", user.names_DocumentsList);
+                        if(user != null)
+                        {
+                            var docNotFamiliarLst = new JObject();
+
+                            if (user.names_DocumentsList[0] == ',')
+                                user.names_DocumentsList = user.names_DocumentsList.Remove(0, 1);
+                            if (user.names_DocumentsList[user.names_DocumentsList.Length-1] == ',')
+                                user.names_DocumentsList = user.names_DocumentsList.Remove(user.names_DocumentsList.Length - 1, 1);
+                            response.Add("docNotFamiliarLst", user.names_DocumentsList);
+                        } else
+                        {
+                            response["error"] = "225";
+                            response["message"] = "Пользователь ознакомился со всеми документами / документов в БД нет ни одного документа";
+                        }
                     }
                     else
                     {
@@ -730,15 +743,34 @@ namespace MetroService.WebService
                 {
                     if (isUserExist(login, password))
                     {
-                        var docLst = JObject.Parse(this.GetDocuments(login, password)).GetValue("documents").Value<JArray>().Value<List<Document>>();
-                        var docNotFamLst = JObject.Parse(   
-                                                this.GetNotFamiliarDocuments(secret_key, login, password)
-                                            ).GetValue("docNotFamiliarLst").Value<string>();
+                        MetroDbEntities1.Document.Load();
 
-                        response.Add(
-                                     "docFamiliarLst", 
-                                     DocumentHelper.ParceFamiliarDocument(docLst, docNotFamLst.Split(','))
-                                    );
+                        var docLst = MetroDbEntities1.Document.Local.ToList();
+                        if(docLst != null && docLst.Count > 0)
+                        {
+                            var docNotFamLst = JObject.Parse(
+                                this.GetNotFamiliarDocuments(secret_key, login, password)
+                            ).GetValue("docNotFamiliarLst");
+
+                            if (docNotFamLst != null)
+                            {
+                                response.Add(
+                                    "docFamiliarLst",
+                                    DocumentHelper.ParceFamiliarDocument(docLst, docNotFamLst.Value<string>().Split(','))
+                                );
+                            }
+                            else
+                            {
+                                response.Add(
+                                    "docFamiliarLst",
+                                    DocumentHelper.ParceFamiliarDocument(docLst, null)
+                                );
+                            }
+                        }else
+                        {
+                            response["error"] = "505";
+                            response["message"] = "На сервисе не нашелся ни один документ";
+                        }
                     }
                     else
                     {
