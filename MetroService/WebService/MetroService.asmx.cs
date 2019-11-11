@@ -280,7 +280,7 @@ namespace MetroService.WebService
                     var lstUsers = MetroDbEntities1.User.Local;
                     if (lstUsers.Count > 0)
                     {
-                        var dataUser = lstUsers.FirstOrDefault(x => x.login == login);
+                        var dataUser = lstUsers.FirstOrDefault(x => x.login == login && x.password == password);
                         if(dataUser != null)
                         {
                             JObject user = new JObject();
