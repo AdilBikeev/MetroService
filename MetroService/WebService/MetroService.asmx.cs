@@ -104,7 +104,7 @@ namespace MetroService.WebService
         /// <summary>
         /// Обновляет в БД для пользователя список документов, с которыми он ознакомился
         /// </summary>
-        /// <param name="secret_key">Секретный ключ</param>
+        /// <param name="sekret_key">Секретный ключ</param>
         /// <param name="login">Логин</param>
         /// <param name="password">Пароль</param>
         /// <param name="docFamiliarLst">Список всех названий документов, с которыми ознакомился пользователь
@@ -112,7 +112,7 @@ namespace MetroService.WebService
         /// </param>
         /// <returns>JSON объект с кодом ошибки и сопровождающим сообщением.</returns>
         [WebMethod(Description = "Обновляет в БД для пользователя список документов, с которыми он ознакомился.")]
-        public string UpdateListNotFamiliarDoc(string secret_key, string login, string password, string docFamiliarLst)
+        public string UpdateListNotFamiliarDoc(string sekret_key, string login, string password, string docFamiliarLst)
         {
             JObject response = this.getObjResponse();
 
@@ -323,57 +323,66 @@ namespace MetroService.WebService
         /// <param name="password">Пароль</param>
         /// <returns>JSON объект со списком всех документов в БД</returns>
         [WebMethod(Description = "Предоставляет список документов для пользователя с указанным логином и паролем.")]
-        public string GetDocuments(string login, string password)
+        public string GetDocuments(string sekret_key, string login, string password)
         {
             JObject response = this.getObjResponse();
-
-            try
+            if (!string.IsNullOrEmpty(sekret_key) && sekret_key == "rye3firbvlvjsne3n25123m2n1")
             {
-                if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+                try
                 {
-                    response["error"] = "1";
-                    response["message"] = "Вы не указали логин/пароль";
-                }
-                else
-                {
-                    MetroDbEntities1.Document.Load();
-                    if (isUserExist(login, password))
+                    if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
                     {
-                        var lstDocuments = MetroDbEntities1.Document.Local;
-                        if (lstDocuments.Count > 0)
+                        response["error"] = "1";
+                        response["message"] = "Вы не указали логин/пароль";
+                    }
+                    else
+                    {
+                        MetroDbEntities1.Document.Load();
+                        if (isUserExist(login, password))
                         {
-                            var documents = new JArray();
-
-                            foreach (var doc in lstDocuments)
+                            var lstDocuments = MetroDbEntities1.Document.Local;
+                            if (lstDocuments.Count > 0)
                             {
-                                var document = new JObject();
-                                document.Add("header", doc.header);
-                                document.Add("Name", doc.Name);
-                                document.Add("content", doc.content);
-                                document.Add("dateGive", doc.dateGive.ToString("d"));
-                                document.Add("dateDeadLine", doc.dateDeadLine.ToString("d"));
-                                document.Add("finishDeadLine", DateTime.Now > doc.dateDeadLine ? "1" : "0");
+                                var documents = new JArray();
 
-                                documents.Add(document);
+                                foreach (var doc in lstDocuments)
+                                {
+                                    var document = new JObject();
+                                    document.Add("header", doc.header);
+                                    document.Add("Name", doc.Name);
+                                    document.Add("content", doc.content);
+                                    document.Add("dateGive", doc.dateGive.ToString("d"));
+                                    document.Add("dateDeadLine", doc.dateDeadLine.ToString("d"));
+                                    document.Add("finishDeadLine", DateTime.Now > doc.dateDeadLine ? "1" : "0");
+
+                                    documents.Add(document);
+                                }
+
+                                response.Add("documents", documents);
                             }
-
-                            response.Add("documents", documents);
-                        } else
-                        {
-                            response["error"] = "505";
-                            response["message"] = "На сервисе не нашелся ни один документ";
+                            else
+                            {
+                                response["error"] = "505";
+                                response["message"] = "На сервисе не нашелся ни один документ";
+                            }
                         }
-                    } else
-                    {
-                        response["error"] = "5";
-                        response["message"] = "Указан неверный логин/пароль";
+                        else
+                        {
+                            response["error"] = "5";
+                            response["message"] = "Указан неверный логин/пароль";
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    response["error"] = "30";
+                    response["message"] = ex.Message;
+                }
             }
-            catch (Exception ex)
+            else
             {
-                response["error"] = "30";
-                response["message"] = ex.Message;
+                response["error"] = "1";
+                response["message"] = "Отказано в доступе";
             }
             return response.ToString();
         }
@@ -381,7 +390,7 @@ namespace MetroService.WebService
         /// <summary>
         /// Добавляет пользователя в БД с указанным login и password
         /// </summary>
-        /// <param name="secret_key">Секретный ключ</param>
+        /// <param name="sekret_key">Секретный ключ</param>
         /// <param name="login">Логин</param>
         /// <param name="password">Пароль</param>
         /// <param name="name">Имя</param>
@@ -389,7 +398,7 @@ namespace MetroService.WebService
         /// <param name="lastname">Отчество</param>
         /// <returns>JSON объект с результатом выполнения операции</returns>
         [WebMethod(Description = "Добавляет пользователя в БД с указанным login, password и личными данными")]
-        public string AddUser(string secret_key, string login, string password, string name, string surname, string lastname)
+        public string AddUser(string sekret_key, string login, string password, string name, string surname, string lastname)
         {
             JObject response = this.getObjResponse();
 
@@ -418,7 +427,7 @@ namespace MetroService.WebService
 
                     MetroDbEntities1.SaveChanges();
                     response["message"] = "Пользователь успешно добавлен в БД";
-                    var result = UpdateListNotFamiliarDoc(secret_key, login, password, string.Empty);
+                    var result = UpdateListNotFamiliarDoc(sekret_key, login, password, string.Empty);
                     response.Add("inner_message", JObject.Parse(result));
                 }
                 else
@@ -438,7 +447,7 @@ namespace MetroService.WebService
         /// <summary>
         /// Добавляет пользователя в БД с указанным названием, заголовком и контентом
         /// </summary>
-        /// <param name="secret_key">Секретный ключ</param>
+        /// <param name="sekret_key">Секретный ключ</param>
         /// <param name="login">Логин</param>
         /// <param name="password">Пароль</param>
         /// <param name="name">Название документа</param>
@@ -447,7 +456,7 @@ namespace MetroService.WebService
         /// <param name="dateDeadLine">Дата окончания срока для ознакомления с документов в формате ДД.ММ.ГГГГ</param>
         /// <returns>JSON объект с результатом выполнения операции</returns>
         [WebMethod(Description = "Добавляет пользователя в БД с указанным названием, заголовком и контентом")]
-        public string AddDocuments(string secret_key, string login, string password, string name, string header, string content, string dateDeadLine)
+        public string AddDocuments(string sekret_key, string login, string password, string name, string header, string content, string dateDeadLine)
         {
             JObject response = this.getObjResponse();
 
@@ -523,13 +532,13 @@ namespace MetroService.WebService
         /// <summary>
         /// Удаляет документ с указанным названием
         /// </summary>
-        /// <param name="secret_key">Секретный ключ</param>
+        /// <param name="sekret_key">Секретный ключ</param>
         /// <param name="login">Логин</param>
         /// <param name="password">Пароль</param>
         /// <param name="name">Название документа</param>
         /// <returns>JSON объект с результатом выполнения операции</returns>
         [WebMethod(Description = "Удаляет документ с указанным названием.")]
-        public string RemoveDocument(string secret_key, string login, string password, string name)
+        public string RemoveDocument(string sekret_key, string login, string password, string name)
         {
             JObject response = this.getObjResponse();
 
@@ -549,7 +558,7 @@ namespace MetroService.WebService
                             var doc = MetroDbEntities1.Document.First(x => x.Name == name);
                             MetroDbEntities1.Document.Remove(doc);
                             MetroDbEntities1.SaveChanges();
-                            this.UpdateListNotFamiliarDoc(secret_key, login, password, this.GetFamiliarDocuments(secret_key, login, password));
+                            this.UpdateListNotFamiliarDoc(sekret_key, login, password, this.GetFamiliarDocuments(sekret_key, login, password));
                         }
                         else
                         {
@@ -575,12 +584,12 @@ namespace MetroService.WebService
         /// <summary>
         /// Удаляет пользователя из БД
         /// </summary>
-        /// <param name="secret_key">Секретный ключ</param>
+        /// <param name="sekret_key">Секретный ключ</param>
         /// <param name="login">Логин</param>
         /// <param name="password">Пароль</param>
         /// <returns>JSON объект с результатом операции</returns>
         [WebMethod(Description = "Удаляет пользователя из БД с указанным логином и паролем.")]
-        public string RemoveUser(string secret_key, string login, string password)
+        public string RemoveUser(string sekret_key, string login, string password)
         {
             JObject response = this.getObjResponse();
 
@@ -626,7 +635,7 @@ namespace MetroService.WebService
         /// <summary>
         /// Изменяет данные дкоумента
         /// </summary>
-        /// <param name="secret_key">Секретный ключ</param>
+        /// <param name="sekret_key">Секретный ключ</param>
         /// <param name="login">Логин</param>
         /// <param name="password">Пароль</param>
         /// <param name="name">Новый заголовок документа</param>
@@ -634,7 +643,7 @@ namespace MetroService.WebService
         /// <param name="content">Новый контент документа</param>
         /// <returns>JSON объект с результатом выполнения операции</returns>
         [WebMethod(Description = "Изменяет данные дкоумента.")]
-        public string ChangeDataDocument(string secret_key, string login, string password, string name, string header, string content)
+        public string ChangeDataDocument(string sekret_key, string login, string password, string name, string header, string content)
         {
             JObject response = this.getObjResponse();
 
@@ -679,119 +688,135 @@ namespace MetroService.WebService
         }
 
         [WebMethod(Description = "Предоставляет список документов, с которыми не ознакомился пользователь с указанным логином и паролем.")]
-        public string GetNotFamiliarDocuments(string secret_key, string login, string password)
+        public string GetNotFamiliarDocuments(string sekret_key, string login, string password)
         {
             JObject response = this.getObjResponse();
-
-            try
+            if (!string.IsNullOrEmpty(sekret_key) && sekret_key == "rye3firbvlvjsne3n25123m2n1")
             {
-                if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+                try
                 {
-                    response["error"] = "1";
-                    response["message"] = "Вы не указали логин/пароль";
-                }
-                else
-                {
-                    if (isUserExist(login, password))
+                    if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
                     {
-                        MetroDbEntities1.NotFamiliarDocuments.Load();
-                        MetroDbEntities1.Document.Load();
-                        var docs = MetroDbEntities1.Document.Local.ToList();
-                        var lstDocuments = MetroDbEntities1.NotFamiliarDocuments.Local;
-                        var user = lstDocuments.FirstOrDefault(x => x.user_Login == login);
-                        if(user != null)
-                        {
-                            var docNotFamiliarLst = new JObject();
-
-                            if (user.names_DocumentsList[0] == ',')
-                                user.names_DocumentsList = user.names_DocumentsList.Remove(0, 1);
-                            if (user.names_DocumentsList[user.names_DocumentsList.Length-1] == ',')
-                                user.names_DocumentsList = user.names_DocumentsList.Remove(user.names_DocumentsList.Length - 1, 1);
-                            response.Add("docNotFamiliarLst", DocumentHelper.ParceNotFamiliarDocument(docs, user.names_DocumentsList.Split(',')));
-                        } else
-                        {
-                            response["error"] = "225";
-                            response["message"] = "Пользователь ознакомился со всеми документами / документов в БД нет ни одного документа";
-                        }
+                        response["error"] = "1";
+                        response["message"] = "Вы не указали логин/пароль";
                     }
                     else
                     {
-                        response["error"] = "5";
-                        response["message"] = "Указан неверный логин/пароль";
+                        if (isUserExist(login, password))
+                        {
+                            MetroDbEntities1.NotFamiliarDocuments.Load();
+                            MetroDbEntities1.Document.Load();
+                            var docs = MetroDbEntities1.Document.Local.ToList();
+                            var lstDocuments = MetroDbEntities1.NotFamiliarDocuments.Local;
+                            var user = lstDocuments.FirstOrDefault(x => x.user_Login == login);
+                            if (user != null)
+                            {
+                                var docNotFamiliarLst = new JObject();
+
+                                if (user.names_DocumentsList[0] == ',')
+                                    user.names_DocumentsList = user.names_DocumentsList.Remove(0, 1);
+                                if (user.names_DocumentsList[user.names_DocumentsList.Length - 1] == ',')
+                                    user.names_DocumentsList = user.names_DocumentsList.Remove(user.names_DocumentsList.Length - 1, 1);
+                                response.Add("docNotFamiliarLst", DocumentHelper.ParceNotFamiliarDocument(docs, user.names_DocumentsList.Split(',')));
+                            }
+                            else
+                            {
+                                response["error"] = "225";
+                                response["message"] = "Пользователь ознакомился со всеми документами / документов в БД нет ни одного документа";
+                            }
+                        }
+                        else
+                        {
+                            response["error"] = "5";
+                            response["message"] = "Указан неверный логин/пароль";
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    response["error"] = "30";
+                    response["message"] = ex.Message;
+                }
             }
-            catch (Exception ex)
+            else
             {
-                response["error"] = "30";
-                response["message"] = ex.Message;
+                response["error"] = "1";
+                response["message"] = "Отказано в доступе";
             }
             return response.ToString();
         }
 
         [WebMethod(Description = "Предоставляет список документов, с которыми ознакомился пользователь с указанным логином и паролем.")]
-        public string GetFamiliarDocuments(string secret_key, string login, string password)
+        public string GetFamiliarDocuments(string sekret_key, string login, string password)
         {
             JObject response = this.getObjResponse();
-
-            try
+            if (!string.IsNullOrEmpty(sekret_key) && sekret_key == "rye3firbvlvjsne3n25123m2n1")
             {
-                if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+                try
                 {
-                    response["error"] = "1";
-                    response["message"] = "Вы не указали логин/пароль";
-                }
-                else
-                {
-                    if (isUserExist(login, password))
+                    if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
                     {
-                        MetroDbEntities1.Document.Load();
-
-                        var docLst = MetroDbEntities1.Document.Local.ToList();
-                        if(docLst != null && docLst.Count > 0)
+                        response["error"] = "1";
+                        response["message"] = "Вы не указали логин/пароль";
+                    }
+                    else
+                    {
+                        if (isUserExist(login, password))
                         {
-                            MetroDbEntities1.NotFamiliarDocuments.Load();
-                            var docNotFamLst = MetroDbEntities1.NotFamiliarDocuments.Local.ToList();
+                            MetroDbEntities1.Document.Load();
 
-                            if (docNotFamLst != null && docNotFamLst.Count > 0)
+                            var docLst = MetroDbEntities1.Document.Local.ToList();
+                            if (docLst != null && docLst.Count > 0)
                             {
-                                var docsUser = docNotFamLst.FirstOrDefault(x => x.user_Login == login);
-                                if(docsUser != null)
+                                MetroDbEntities1.NotFamiliarDocuments.Load();
+                                var docNotFamLst = MetroDbEntities1.NotFamiliarDocuments.Local.ToList();
+
+                                if (docNotFamLst != null && docNotFamLst.Count > 0)
                                 {
-                                   response.Add(
-                                        "docFamiliarLst",
-                                        DocumentHelper.ParceFamiliarDocument(docLst, docsUser.names_DocumentsList.Split(','))
-                                    );
+                                    var docsUser = docNotFamLst.FirstOrDefault(x => x.user_Login == login);
+                                    if (docsUser != null)
+                                    {
+                                        response.Add(
+                                             "docFamiliarLst",
+                                             DocumentHelper.ParceFamiliarDocument(docLst, docsUser.names_DocumentsList.Split(','))
+                                         );
+                                    }
+                                    else
+                                    {
+                                        throw new Exception("Не удалось найти у пользователя инфомрмацию о неознакомленных документов");
+                                    }
                                 }
                                 else
                                 {
-                                    throw new Exception("Не удалось найти у пользователя инфомрмацию о неознакомленных документов");
+                                    response.Add(
+                                        "docFamiliarLst",
+                                        DocumentHelper.ParceFamiliarDocument(docLst, null)
+                                    );
                                 }
                             }
                             else
                             {
-                                response.Add(
-                                    "docFamiliarLst",
-                                    DocumentHelper.ParceFamiliarDocument(docLst, null)
-                                );
+                                response["error"] = "505";
+                                response["message"] = "На сервисе не нашелся ни один документ";
                             }
-                        }else
+                        }
+                        else
                         {
-                            response["error"] = "505";
-                            response["message"] = "На сервисе не нашелся ни один документ";
+                            response["error"] = "5";
+                            response["message"] = "Указан неверный логин/пароль";
                         }
                     }
-                    else
-                    {
-                        response["error"] = "5";
-                        response["message"] = "Указан неверный логин/пароль";
-                    }
+                }
+                catch (Exception ex)
+                {
+                    response["error"] = "30";
+                    response["message"] = ex.Message;
                 }
             }
-            catch (Exception ex)
+            else
             {
-                response["error"] = "30";
-                response["message"] = ex.Message;
+                response["error"] = "1";
+                response["message"] = "Отказано в доступе";
             }
             return response.ToString();
         }
