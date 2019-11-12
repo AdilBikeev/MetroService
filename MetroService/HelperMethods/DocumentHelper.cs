@@ -26,6 +26,44 @@ namespace MetroService.HelperMethods
         }
 
         /// <summary>
+        /// Возвращает список документов с которыми не ознакомился пользователь
+        /// </summary>
+        /// <param name="docLst">Список всех документов</param>
+        /// <param name="docNotFamLst">Списко документов с которыми не ознакомился пользователь</param>
+        /// <returns></returns>
+        public static string ParceNotFamiliarDocument(List<Document> docLst, string[] docNotFamLst)
+        {
+            List<Document> docs = new List<Document>();
+            if (docNotFamLst != null)
+            {
+                foreach (var item in docNotFamLst)
+                {
+                    var obj = docLst.FirstOrDefault(x => x.Name == item);
+                    if (obj != null)
+                        docs.Add(obj);
+                }
+            }
+
+
+            var documents = new JArray();
+
+            foreach (var doc in docs)
+            {
+                var document = new JObject();
+                document.Add("header", doc.header);
+                document.Add("Name", doc.Name);
+                document.Add("content", doc.content);
+                document.Add("dateGive", doc.dateGive.ToString("d"));
+                document.Add("dateDeadLine", doc.dateDeadLine.ToString("d"));
+                document.Add("finishDeadLine", DateTime.Now > doc.dateDeadLine ? "1" : "0");
+
+                documents.Add(document);
+            }
+
+            return documents.ToString();
+        }
+
+        /// <summary>
         /// Возвращает список документов с которыми ознакомился пользователь
         /// </summary>
         /// <param name="docLst">Список всех документов</param>

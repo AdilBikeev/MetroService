@@ -695,6 +695,8 @@ namespace MetroService.WebService
                     if (isUserExist(login, password))
                     {
                         MetroDbEntities1.NotFamiliarDocuments.Load();
+                        MetroDbEntities1.Document.Load();
+                        var docs = MetroDbEntities1.Document.Local.ToList();
                         var lstDocuments = MetroDbEntities1.NotFamiliarDocuments.Local;
                         var user = lstDocuments.FirstOrDefault(x => x.user_Login == login);
                         if(user != null)
@@ -705,7 +707,7 @@ namespace MetroService.WebService
                                 user.names_DocumentsList = user.names_DocumentsList.Remove(0, 1);
                             if (user.names_DocumentsList[user.names_DocumentsList.Length-1] == ',')
                                 user.names_DocumentsList = user.names_DocumentsList.Remove(user.names_DocumentsList.Length - 1, 1);
-                            response.Add("docNotFamiliarLst", user.names_DocumentsList);
+                            response.Add("docNotFamiliarLst", DocumentHelper.ParceNotFamiliarDocument(docs, user.names_DocumentsList.Split(',')));
                         } else
                         {
                             response["error"] = "225";
