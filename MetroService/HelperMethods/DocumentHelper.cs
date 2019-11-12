@@ -31,7 +31,7 @@ namespace MetroService.HelperMethods
         /// <param name="docLst">Список всех документов</param>
         /// <param name="docNotFamLst">Списко документов с которыми не ознакомился пользователь</param>
         /// <returns></returns>
-        public static string ParceNotFamiliarDocument(List<Document> docLst, string[] docNotFamLst)
+        public static JArray ParceNotFamiliarDocument(List<Document> docLst, string[] docNotFamLst)
         {
             List<Document> docs = new List<Document>();
             if (docNotFamLst != null)
@@ -60,7 +60,7 @@ namespace MetroService.HelperMethods
                 documents.Add(document);
             }
 
-            return documents.ToString();
+            return documents;
         }
 
         /// <summary>
