@@ -350,8 +350,8 @@ namespace MetroService.WebService
                                 document.Add("header", doc.header);
                                 document.Add("Name", doc.Name);
                                 document.Add("content", doc.content);
-                                document.Add("dateGive", doc.dateGive);
-                                document.Add("dateDeadLine", doc.dateDeadLine);
+                                document.Add("dateGive", doc.dateGive.ToString("d"));
+                                document.Add("dateDeadLine", doc.dateDeadLine.ToString("d"));
                                 document.Add("finishDeadLine", DateTime.Now > doc.dateDeadLine ? "1" : "0");
 
                                 documents.Add(document);
