@@ -99,5 +99,47 @@ namespace MetroService.HelperMethods
 
             return documents;
         }
+
+        /// <summary>
+        /// Удаляет те документы из docsAll, с которыми пользователь ознакомился
+        /// </summary>
+        /// <param name="docsNotFam">Документы, с которыми не ознакомился пользователь до текущего момента</param>
+        /// <param name="docsFamNow">Документы с которыми пользователь только что ознакомился</param>
+        /// <returns>Возвращает новый список документов, с которыми пользователю нужно ознакомиться</returns>
+        public static string RemoveFamiliarDoc(string[] docsNotFam, string[] docsFamNow)
+        {
+            string docsNotFamNew = string.Empty;
+
+            bool isFamiliarDoc = false;
+
+            
+            //Пробегаемся по неознакомл на данный момент документам
+            for (int i = 0; i < docsNotFam.Length; i++, isFamiliarDoc = false)
+            {
+                //Пробегаемся по ознак. только что документам    
+                for (int j = 0; j < docsFamNow.Length; j++)
+                {
+                    if(docsNotFam[i] == docsFamNow[j])
+                    {
+                        isFamiliarDoc = true;
+                        break;
+                    }
+                }
+
+                if (!isFamiliarDoc)
+                {
+                    if(docsNotFamNew != string.Empty)
+                    {
+                        docsNotFamNew += "," + docsNotFam[i];
+                    }
+                    else
+                    {
+                        docsNotFamNew = docsNotFam[i];
+                    }
+                }
+            }
+
+            return docsNotFamNew;
+        }
     }
 }

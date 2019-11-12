@@ -132,30 +132,27 @@ namespace MetroService.WebService
                             docFamiliarLst = string.Empty;
                         }
 
-                        MetroDbEntities1.Document.Load();
-                        var docsAll = MetroDbEntities1.Document.Local;
-
                         MetroDbEntities1.NotFamiliarDocuments.Load();
                         var user = MetroDbEntities1.NotFamiliarDocuments.FirstOrDefault(x => x.user_Login == login);
 
                         //Парсим список документов с которыми ознакомился пользователь
                         var familiarLst = docFamiliarLst.Split(',');
 
-                        //Получаем список документов с которыми пользователь не ознакомился
-                        var docsNotFamiliarLst = docsAll.TakeWhile(x => familiarLst.FirstOrDefault(y => y == x.Name) == null);
-
                         //Если пользователь впервые зарегестрирвоался
-                        if(user == null)
+                        if (user == null)
                         {
+                            MetroDbEntities1.Document.Load();
+                            var docAll = MetroDbEntities1.Document.Local;
                             MetroDbEntities1.NotFamiliarDocuments.Add(new NotFamiliarDocuments
                             {
                                 user_Login = login,
-                                names_DocumentsList = DocumentHelper.ParceDocument(docsNotFamiliarLst.ToList())
+                                names_DocumentsList = docAll.Count == 0 ? "": DocumentHelper.ParceDocument(docAll.ToList())
                             });
-                        }else
+                        }
+                        else
                         {
                             var i = MetroDbEntities1.NotFamiliarDocuments.Local.IndexOf(user);
-                            MetroDbEntities1.NotFamiliarDocuments.Local[i].names_DocumentsList = DocumentHelper.ParceDocument(docsNotFamiliarLst.ToList());
+                            MetroDbEntities1.NotFamiliarDocuments.Local[i].names_DocumentsList = DocumentHelper.RemoveFamiliarDoc(user.names_DocumentsList.Split(','), familiarLst);
                         }
                         MetroDbEntities1.SaveChanges();
                     }
