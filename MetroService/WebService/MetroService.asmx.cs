@@ -720,12 +720,17 @@ namespace MetroService.WebService
                             if (user != null)
                             {
                                 var docNotFamiliarLst = new JObject();
-
-                                if (user.names_DocumentsList[0] == ',')
-                                    user.names_DocumentsList = user.names_DocumentsList.Remove(0, 1);
-                                if (user.names_DocumentsList[user.names_DocumentsList.Length - 1] == ',')
-                                    user.names_DocumentsList = user.names_DocumentsList.Remove(user.names_DocumentsList.Length - 1, 1);
-                                response.Add("docNotFamiliarLst", DocumentHelper.ParceNotFamiliarDocument(docs, user.names_DocumentsList.Split(',')));
+                                if (!string.IsNullOrEmpty(user.names_DocumentsList))
+                                {
+                                    if (user.names_DocumentsList[0] == ',')
+                                        user.names_DocumentsList = user.names_DocumentsList.Remove(0, 1);
+                                    if (user.names_DocumentsList[user.names_DocumentsList.Length - 1] == ',')
+                                        user.names_DocumentsList = user.names_DocumentsList.Remove(user.names_DocumentsList.Length - 1, 1);
+                                    response.Add("docNotFamiliarLst", DocumentHelper.ParceNotFamiliarDocument(docs, user.names_DocumentsList.Split(',')));
+                                } else
+                                {
+                                    response.Add("docNotFamiliarLst", string.Empty);
+                                }
                             }
                             else
                             {
