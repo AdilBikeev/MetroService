@@ -104,7 +104,7 @@ namespace MetroService.WebService
         /// <summary>
         /// Обновляет в БД для пользователя список документов, с которыми он ознакомился
         /// </summary>
-        /// <param name="secret_key">Секретный ключ</param>
+        /// <param name="sekret_key">Секретный ключ</param>
         /// <param name="login">Логин</param>
         /// <param name="password">Пароль</param>
         /// <param name="docFamiliarLst">Список всех названий документов, с которыми ознакомился пользователь
@@ -112,7 +112,7 @@ namespace MetroService.WebService
         /// </param>
         /// <returns>JSON объект с кодом ошибки и сопровождающим сообщением.</returns>
         [WebMethod(Description = "Обновляет в БД для пользователя список документов, с которыми он ознакомился.")]
-        public string UpdateListNotFamiliarDoc(string secret_key, string login, string password, string docFamiliarLst)
+        public string UpdateListNotFamiliarDoc(string sekret_key, string login, string password, string docFamiliarLst)
         {
             JObject response = this.getObjResponse();
 
@@ -391,7 +391,7 @@ namespace MetroService.WebService
         /// <summary>
         /// Добавляет пользователя в БД с указанным login и password
         /// </summary>
-        /// <param name="secret_key">Секретный ключ</param>
+        /// <param name="sekret_key">Секретный ключ</param>
         /// <param name="login">Логин</param>
         /// <param name="password">Пароль</param>
         /// <param name="name">Имя</param>
@@ -399,7 +399,7 @@ namespace MetroService.WebService
         /// <param name="lastname">Отчество</param>
         /// <returns>JSON объект с результатом выполнения операции</returns>
         [WebMethod(Description = "Добавляет пользователя в БД с указанным login, password и личными данными")]
-        public string AddUser(string secret_key, string login, string password, string name, string surname, string lastname)
+        public string AddUser(string sekret_key, string login, string password, string name, string surname, string lastname)
         {
             JObject response = this.getObjResponse();
 
@@ -428,7 +428,7 @@ namespace MetroService.WebService
 
                     MetroDbEntities1.SaveChanges();
                     response["message"] = "Пользователь успешно добавлен в БД";
-                    var result = UpdateListNotFamiliarDoc(secret_key, login, password, string.Empty);
+                    var result = UpdateListNotFamiliarDoc(sekret_key, login, password, string.Empty);
                     response.Add("inner_message", JObject.Parse(result));
                 }
                 else
@@ -448,7 +448,7 @@ namespace MetroService.WebService
         /// <summary>
         /// Добавляет пользователя в БД с указанным названием, заголовком и контентом
         /// </summary>
-        /// <param name="secret_key">Секретный ключ</param>
+        /// <param name="sekret_key">Секретный ключ</param>
         /// <param name="login">Логин</param>
         /// <param name="password">Пароль</param>
         /// <param name="name">Название документа</param>
@@ -457,7 +457,7 @@ namespace MetroService.WebService
         /// <param name="dateDeadLine">Дата окончания срока для ознакомления с документов в формате ДД.ММ.ГГГГ</param>
         /// <returns>JSON объект с результатом выполнения операции</returns>
         [WebMethod(Description = "Добавляет пользователя в БД с указанным названием, заголовком и контентом")]
-        public string AddDocuments(string secret_key, string login, string password, string name, string header, string content, string dateDeadLine)
+        public string AddDocuments(string sekret_key, string login, string password, string name, string header, string content, string dateDeadLine)
         {
             JObject response = this.getObjResponse();
 
@@ -533,13 +533,13 @@ namespace MetroService.WebService
         /// <summary>
         /// Удаляет документ с указанным названием
         /// </summary>
-        /// <param name="secret_key">Секретный ключ</param>
+        /// <param name="sekret_key">Секретный ключ</param>
         /// <param name="login">Логин</param>
         /// <param name="password">Пароль</param>
         /// <param name="name">Название документа</param>
         /// <returns>JSON объект с результатом выполнения операции</returns>
         [WebMethod(Description = "Удаляет документ с указанным названием.")]
-        public string RemoveDocument(string secret_key, string login, string password, string name)
+        public string RemoveDocument(string sekret_key, string login, string password, string name)
         {
             JObject response = this.getObjResponse();
 
@@ -559,7 +559,7 @@ namespace MetroService.WebService
                             var doc = MetroDbEntities1.Document.First(x => x.Name == name);
                             MetroDbEntities1.Document.Remove(doc);
                             MetroDbEntities1.SaveChanges();
-                            this.UpdateListNotFamiliarDoc(secret_key, login, password, this.GetFamiliarDocuments(secret_key, login, password));
+                            this.UpdateListNotFamiliarDoc(sekret_key, login, password, this.GetFamiliarDocuments(sekret_key, login, password));
                         }
                         else
                         {
@@ -585,12 +585,12 @@ namespace MetroService.WebService
         /// <summary>
         /// Удаляет пользователя из БД
         /// </summary>
-        /// <param name="secret_key">Секретный ключ</param>
+        /// <param name="sekret_key">Секретный ключ</param>
         /// <param name="login">Логин</param>
         /// <param name="password">Пароль</param>
         /// <returns>JSON объект с результатом операции</returns>
         [WebMethod(Description = "Удаляет пользователя из БД с указанным логином и паролем.")]
-        public string RemoveUser(string secret_key, string login, string password)
+        public string RemoveUser(string sekret_key, string login, string password)
         {
             JObject response = this.getObjResponse();
 
@@ -636,7 +636,7 @@ namespace MetroService.WebService
         /// <summary>
         /// Изменяет данные дкоумента
         /// </summary>
-        /// <param name="secret_key">Секретный ключ</param>
+        /// <param name="sekret_key">Секретный ключ</param>
         /// <param name="login">Логин</param>
         /// <param name="password">Пароль</param>
         /// <param name="name">Новый заголовок документа</param>
@@ -644,7 +644,7 @@ namespace MetroService.WebService
         /// <param name="content">Новый контент документа</param>
         /// <returns>JSON объект с результатом выполнения операции</returns>
         [WebMethod(Description = "Изменяет данные дкоумента.")]
-        public string ChangeDataDocument(string secret_key, string login, string password, string name, string header, string content)
+        public string ChangeDataDocument(string sekret_key, string login, string password, string name, string header, string content)
         {
             JObject response = this.getObjResponse();
 
@@ -696,7 +696,7 @@ namespace MetroService.WebService
         /// <param name="password">Пароль</param>
         /// <returns>JSON объект со списком всех документов в БД</returns>
         [WebMethod(Description = "Предоставляет список документов, с которыми не ознакомился пользователь с указанным логином и паролем.")]
-        public string GetNotFamiliarDocuments(string secret_key, string login, string password)
+        public string GetNotFamiliarDocuments(string sekret_key, string login, string password)
         {
             JObject response = this.getObjResponse();
             if (!string.IsNullOrEmpty(sekret_key) && sekret_key == "rye3firbvlvjsne3n25123m2n1")
