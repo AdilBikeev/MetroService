@@ -750,16 +750,23 @@ namespace MetroService.WebService
                         var docLst = MetroDbEntities1.Document.Local.ToList();
                         if(docLst != null && docLst.Count > 0)
                         {
-                            var docNotFamLst = JObject.Parse(
-                                this.GetNotFamiliarDocuments(secret_key, login, password)
-                            ).GetValue("docNotFamiliarLst");
+                            MetroDbEntities1.NotFamiliarDocuments.Load();
+                            var docNotFamLst = MetroDbEntities1.NotFamiliarDocuments.Local.ToList();
 
-                            if (docNotFamLst != null)
+                            if (docNotFamLst != null && docNotFamLst.Count > 0)
                             {
-                                response.Add(
-                                    "docFamiliarLst",
-                                    DocumentHelper.ParceFamiliarDocument(docLst, docNotFamLst.Value<string>().Split(','))
-                                );
+                                var docsUser = docNotFamLst.FirstOrDefault(x => x.user_Login == login);
+                                if(docsUser != null)
+                                {
+                                   response.Add(
+                                        "docFamiliarLst",
+                                        DocumentHelper.ParceFamiliarDocument(docLst, docsUser.names_DocumentsList.Split(','))
+                                    );
+                                }
+                                else
+                                {
+                                    throw new Exception("Не удалось найти у пользователя инфомрмацию о неознакомленных документов");
+                                }
                             }
                             else
                             {
