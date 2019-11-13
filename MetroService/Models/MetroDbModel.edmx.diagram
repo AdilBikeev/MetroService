@@ -4,11 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bb362d066e5d4c71a3937879c2e30ad7" Name="Diagram1">
+      <Diagram DiagramId="514790681ed34e57a7a7475a508242ae" Name="Diagram1">
         <EntityTypeShape EntityType="MetroDbModel.Document" Width="1.5" PointX="2.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="MetroDbModel.NotFamiliarDocuments" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="MetroDbModel.User" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
-        <AssociationConnector Association="MetroDbModel.FK__NotFamili__user___5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="MetroDbModel.FK__NotFamili__user___04E4BC85" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

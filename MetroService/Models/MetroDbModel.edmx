@@ -10,8 +10,8 @@
             <PropertyRef Name="Name" />
           </Key>
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="header" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="content" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="header" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="content" Type="nvarchar(max)" Nullable="false" />
           <Property Name="dateGive" Type="date" Nullable="false" />
           <Property Name="dateDeadLine" Type="date" Nullable="false" />
         </EntityType>
@@ -20,7 +20,7 @@
             <PropertyRef Name="user_Login" />
           </Key>
           <Property Name="user_Login" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="names_DocumentsList" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="names_DocumentsList" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -32,7 +32,7 @@
           <Property Name="surname" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="lastname" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <Association Name="FK__NotFamili__user___5CD6CB2B">
+        <Association Name="FK__NotFamili__user___04E4BC85">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="NotFamiliarDocuments" Type="Self.NotFamiliarDocuments" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -48,7 +48,7 @@
           <EntitySet Name="Document" EntityType="Self.Document" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NotFamiliarDocuments" EntityType="Self.NotFamiliarDocuments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__NotFamili__user___5CD6CB2B" Association="Self.FK__NotFamili__user___5CD6CB2B">
+          <AssociationSet Name="FK__NotFamili__user___04E4BC85" Association="Self.FK__NotFamili__user___04E4BC85">
             <End Role="User" EntitySet="User" />
             <End Role="NotFamiliarDocuments" EntitySet="NotFamiliarDocuments" />
           </AssociationSet>
@@ -63,8 +63,8 @@
             <PropertyRef Name="Name" />
           </Key>
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="header" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="content" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="header" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="dateGive" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="dateDeadLine" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
@@ -73,8 +73,8 @@
             <PropertyRef Name="user_Login" />
           </Key>
           <Property Name="user_Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="names_DocumentsList" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="Self.FK__NotFamili__user___5CD6CB2B" FromRole="NotFamiliarDocuments" ToRole="User" />
+          <Property Name="names_DocumentsList" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__NotFamili__user___04E4BC85" FromRole="NotFamiliarDocuments" ToRole="User" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -85,9 +85,9 @@
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="NotFamiliarDocuments" Relationship="Self.FK__NotFamili__user___5CD6CB2B" FromRole="User" ToRole="NotFamiliarDocuments" />
+          <NavigationProperty Name="NotFamiliarDocuments" Relationship="Self.FK__NotFamili__user___04E4BC85" FromRole="User" ToRole="NotFamiliarDocuments" />
         </EntityType>
-        <Association Name="FK__NotFamili__user___5CD6CB2B">
+        <Association Name="FK__NotFamili__user___04E4BC85">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="NotFamiliarDocuments" Type="Self.NotFamiliarDocuments" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -103,7 +103,7 @@
           <EntitySet Name="Document" EntityType="Self.Document" />
           <EntitySet Name="NotFamiliarDocuments" EntityType="Self.NotFamiliarDocuments" />
           <EntitySet Name="User" EntityType="Self.User" />
-          <AssociationSet Name="FK__NotFamili__user___5CD6CB2B" Association="Self.FK__NotFamili__user___5CD6CB2B">
+          <AssociationSet Name="FK__NotFamili__user___04E4BC85" Association="Self.FK__NotFamili__user___04E4BC85">
             <End Role="User" EntitySet="User" />
             <End Role="NotFamiliarDocuments" EntitySet="NotFamiliarDocuments" />
           </AssociationSet>
